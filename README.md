@@ -2,7 +2,9 @@
 ### *Every machine NASA left behind said something before it went quiet.*
 
 > **NASA Space Apps Challenge 2026 Submission**  
-> **Challenge Title:** *Abandoned but not Forgotten: Storytelling about NASA's Discarded Equipment on the Moon and Mars*
+> **Challenge Title:** *Abandoned but not Forgotten: Storytelling about NASA's Discarded Equipment on the Moon and Mars*  
+> **Live Website:** [https://last-words1.vercel.app/](https://last-words1.vercel.app/)  
+> **Source Code:** [https://github.com/SakkuruBhomic/last-words](https://github.com/SakkuruBhomic/last-words)  
 
 ---
 

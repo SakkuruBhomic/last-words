@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://last-words-spaceapps.vercel.app"),
+  metadataBase: new URL("https://last-words1.vercel.app"),
   title: "LAST WORDS | NASA Space Apps Challenge 2026",
   description: "Every machine NASA left behind said something before it went quiet. An interactive storytelling journey across the Moon, Mars, and deep space.",
   keywords: ["NASA", "Space Apps", "Surveyor 3", "Apollo ALSEP", "Opportunity", "InSight", "Ingenuity", "Pioneer 10", "Voyager 1"],

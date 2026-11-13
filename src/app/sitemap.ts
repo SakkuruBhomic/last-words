@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { getAllMachineSlugs } from "@/data/machines";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://last-words-spaceapps.vercel.app";
+  const baseUrl = "https://last-words1.vercel.app";
   const buildDate = new Date("2026-11-14T00:00:00.000Z");
 
   const staticRoutes = [
