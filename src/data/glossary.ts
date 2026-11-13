@@ -32,3 +32,4 @@ export const GLOSSARY: Record<string, GlossaryTerm> = {
     example: "Apollo 11's retroreflector still bounces laser pulses back to Earth today with zero electrical power."
   }
 };
+

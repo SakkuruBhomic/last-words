@@ -28,3 +28,4 @@ This document logs potential future content additions and candidate missions tha
 ## Content Notes & Verification Registry
 - All 8 core machines currently on the website are 100% verified against primary NASA, JPL, and NTRS records.
 - Date discrepancies between UTC and US local times are documented with transparent footnotes on individual machine pages.
+

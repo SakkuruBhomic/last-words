@@ -28,3 +28,4 @@ All 16 photographic assets (2 per machine: THEN operational view and NOW resting
 ## Future Imagery Wishlist (If High-Res Updates Released)
 - **Ingenuity Airfield Chi Orbital High-Resolution:** Future HiRISE or Perseverance Mastcam-Z distant zoom shots of Ingenuity in its resting orientation.
 - **LROC Apollo 11 Lunar Module & EASEP:** Additional lighting phase angles from Lunar Reconnaissance Orbiter narrow-angle cameras.
+

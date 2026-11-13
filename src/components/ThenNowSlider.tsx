@@ -171,3 +171,4 @@ export default function ThenNowSlider({ images, machineName }: ThenNowSliderProp
     </section>
   );
 }
+

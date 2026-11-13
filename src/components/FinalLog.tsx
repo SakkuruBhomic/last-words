@@ -134,3 +134,4 @@ export default function FinalLog({ finalLog, onProgress }: FinalLogProps) {
     </div>
   );
 }
+

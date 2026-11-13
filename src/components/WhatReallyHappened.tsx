@@ -1,9 +1,44 @@
 import { WhatReallyHappened as FactItem } from "@/data/types";
 import { CheckCircle2, ExternalLink, Calendar, BookOpen } from "lucide-react";
+import GlossaryTooltip from "@/components/GlossaryTooltip";
 
 interface WhatReallyHappenedProps {
   facts: FactItem[];
   machineSlug: string;
+}
+
+function formatWithGlossary(text: string) {
+  const regex = /\b(sols?|light-days?|rtgs?|seismometers?|heliopause|retroreflectors?)\b/gi;
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index));
+    }
+    const matchedWord = match[0];
+    const lower = matchedWord.toLowerCase();
+    let termKey = lower;
+    if (lower.startsWith("sol")) termKey = "sol";
+    else if (lower.startsWith("light-day")) termKey = "light-day";
+    else if (lower.startsWith("rtg")) termKey = "rtg";
+    else if (lower.startsWith("seismometer")) termKey = "seismometer";
+    else if (lower.startsWith("retroreflector")) termKey = "retroreflector";
+
+    parts.push(
+      <GlossaryTooltip key={match.index} termKey={termKey}>
+        {matchedWord}
+      </GlossaryTooltip>
+    );
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : text;
 }
 
 export default function WhatReallyHappened({ facts, machineSlug }: WhatReallyHappenedProps) {
@@ -46,7 +81,7 @@ export default function WhatReallyHappened({ facts, machineSlug }: WhatReallyHap
               </div>
 
               <p className="text-sm sm:text-base text-[var(--color-text)]/90 leading-relaxed">
-                {fact.text}
+                {formatWithGlossary(fact.text)}
               </p>
             </div>
           </div>

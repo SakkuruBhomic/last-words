@@ -55,3 +55,4 @@ export default function GlossaryTooltip({ termKey, children }: GlossaryTooltipPr
     </span>
   );
 }
+

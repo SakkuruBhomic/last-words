@@ -140,3 +140,4 @@ runValidation().catch((err) => {
   console.error('Fatal validation runner error:', err);
   process.exit(1);
 });
+

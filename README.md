@@ -109,10 +109,52 @@ The validator verifies:
 - Every image has valid descriptive alt text, visible credits, and official source URLs.
 - All quiz question answer indices are within valid option bounds.
 
-To build the production static export:
+To build the optimized production build:
 
 ```bash
 npm run build
+```
+
+---
+
+## 🚢 Deployment Guide
+
+**LAST WORDS** requires zero external databases, accounts, or proprietary API keys. It can be deployed in seconds to any modern hosting environment:
+
+### 1. Vercel (Recommended for Next.js)
+The easiest way to deploy is through Vercel:
+1. Push your repository to GitHub.
+2. Import the project into [Vercel](https://vercel.com/new).
+3. The framework preset will automatically detect Next.js.
+4. Click **Deploy**. Vercel will run `npm run validate:data` and `npm run build` automatically.
+
+Alternatively, via the Vercel CLI:
+```bash
+npx vercel --prod
+```
+
+### 2. Docker Container (Self-Hosted / VPS)
+A production multi-stage `Dockerfile` and `docker-compose.yml` are provided in the repository root:
+
+```bash
+# Build and run the production container in the background
+docker compose up -d --build
+```
+Access the application on port `3000`: `http://localhost:3000` (or behind a reverse proxy like Nginx or Caddy).
+
+### 3. Netlify
+1. Link your GitHub repository in Netlify.
+2. Build command: `npm run build`
+3. Publish directory: `.next`
+
+### 4. Self-Hosted Node.js Server
+To run the production server directly on any Linux, macOS, or Windows machine:
+```bash
+# Build the production bundle
+npm run build
+
+# Start the high-performance production server on port 3000
+npm run start
 ```
 
 ---

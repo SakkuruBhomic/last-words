@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Zap, Timer } from "lucide-react";
 import Link from "next/link";
 import { useMounted } from "@/lib/useMounted";
+import GlossaryTooltip from "@/components/GlossaryTooltip";
 
 export default function VoyagerLightDay() {
   const mounted = useMounted();
@@ -59,7 +60,7 @@ export default function VoyagerLightDay() {
             </h2>
 
             <p className="text-sm text-gray-300 leading-relaxed">
-              At 25.9 billion kilometers (173.3 AU) from Earth, Voyager 1 is about to cross the threshold where radio signals traveling at the speed of light take a full <strong>24 hours</strong> to make a one-way trip.
+              At 25.9 billion kilometers (173.3 AU) from Earth, Voyager 1 is about to cross the threshold where radio signals traveling at the speed of light take a full <strong>24 hours</strong> to make a one-way trip (<GlossaryTooltip termKey="light-day">one light-day</GlossaryTooltip>). It crossed the <GlossaryTooltip termKey="heliopause">heliopause</GlossaryTooltip> into interstellar space in 2012.
             </p>
 
             <div className="mt-4 flex items-center space-x-4 text-xs font-mono">

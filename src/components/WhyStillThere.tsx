@@ -1,21 +1,34 @@
 import { DollarSign, Repeat, Footprints, HelpCircle } from "lucide-react";
+import GlossaryTooltip from "@/components/GlossaryTooltip";
 
 export default function WhyStillThere() {
   const cards = [
     {
       icon: DollarSign,
       title: "The Rocket Equation & Return Costs",
-      text: "Every kilogram launched off Earth requires tens of kilograms of propellant. Launching a return rocket capable of lifting off Mars or the Moon would double or triple mission costs. Most probes are one-way scientific scouts designed to give their all on the surface.",
+      content: (
+        <span>
+          Every kilogram launched off Earth requires tens of kilograms of propellant. Launching a return rocket capable of lifting off Mars or the Moon would double or triple mission costs. Most probes are one-way scientific scouts designed to give their all on the surface.
+        </span>
+      ),
     },
     {
       icon: Repeat,
       title: "Left On Purpose to Keep Working",
-      text: "Not all hardware is abandoned junk. Stations like the Apollo 11 laser retroreflector and Apollo ALSEP packages were deliberately positioned to provide decades of continuous observations, functioning with zero humans required on site.",
+      content: (
+        <span>
+          Not all hardware is abandoned junk. Stations like the Apollo 11 <GlossaryTooltip termKey="retroreflector">laser retroreflector</GlossaryTooltip> and Apollo ALSEP packages were deliberately positioned to provide decades of continuous observations, functioning with zero humans required on site.
+        </span>
+      ),
     },
     {
       icon: Footprints,
       title: "Sometimes Humans Walk Back",
-      text: "In November 1969, Apollo 12 proved pinpoint landing accuracy by setting down 180 meters from Surveyor 3. Conrad and Bean walked up to the silent craft, cut off its camera and scoop, and brought them home to study how space ages metal.",
+      content: (
+        <span>
+          In November 1969, Apollo 12 proved pinpoint landing accuracy by setting down 180 meters from Surveyor 3. Conrad and Bean walked up to the silent craft, cut off its camera and scoop, and brought them home to study how space ages metal.
+        </span>
+      ),
     },
   ];
 
@@ -47,9 +60,9 @@ export default function WhyStillThere() {
                 <h3 className="font-display font-bold text-xl text-white mb-3">
                   {card.title}
                 </h3>
-                <p className="text-sm text-gray-300 leading-relaxed">
-                  {card.text}
-                </p>
+                <div className="text-sm text-gray-300 leading-relaxed">
+                  {card.content}
+                </div>
               </div>
 
               <div className="mt-6 pt-4 border-t border-[var(--color-border)] text-xs font-mono text-[var(--color-muted)]">

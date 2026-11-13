@@ -41,11 +41,20 @@ export const metadata: Metadata = {
     description: "Every machine NASA left behind said something before it went quiet. Meet 8 historic explorers on the Moon, Mars, and deep space.",
     siteName: "LAST WORDS",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "LAST WORDS - NASA Space Apps Challenge 2026",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "LAST WORDS | NASA Space Apps Challenge 2026",
     description: "Every machine NASA left behind said something before it went quiet.",
+    images: ["/opengraph-image"],
   },
 };
 

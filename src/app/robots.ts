@@ -9,3 +9,4 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: "https://last-words-spaceapps.vercel.app/sitemap.xml",
   };
 }
+
