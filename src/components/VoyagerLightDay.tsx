@@ -7,13 +7,14 @@ import { useMounted } from "@/lib/useMounted";
 
 export default function VoyagerLightDay() {
   const mounted = useMounted();
-  const [now, setNow] = useState<number>(Date.now());
+  const [now, setNow] = useState<number | null>(null);
 
   // Target event: 2026-11-18T10:16:07Z
   const targetISO = "2026-11-18T10:16:07Z";
   const targetTime = new Date(targetISO).getTime();
 
   useEffect(() => {
+    setNow(Date.now());
     const timer = setInterval(() => {
       setNow(Date.now());
     }, 1000);
@@ -21,7 +22,7 @@ export default function VoyagerLightDay() {
     return () => clearInterval(timer);
   }, []);
 
-  if (!mounted) {
+  if (!mounted || now === null) {
     return (
       <section className="my-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] animate-pulse h-40" />
