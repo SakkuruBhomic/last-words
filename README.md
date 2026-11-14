@@ -1,4 +1,4 @@
-# LAST WORDS
+# LAST WORDS (v2: "Little Explorers" Edition)
 ### *Every machine NASA left behind said something before it went quiet.*
 
 > **NASA Space Apps Challenge 2026 Submission**  
@@ -10,167 +10,146 @@
 
 ## 🛰️ Project Overview
 
-**LAST WORDS** is an interactive, accessible, and scientifically grounded storytelling experience that introduces students, educators, and space enthusiasts (grades 5–10, ages 10–16) to eight historic NASA machines left on the Moon, Mars, and in deep space.
+**LAST WORDS** is an interactive, accessible, and scientifically grounded storytelling experience. Upgraded for v2 with the **"Little Explorers"** edition, it now welcomes both young children (ages 5–8 and pre-readers) and older students, educators, and science enthusiasts (grades 5–10) to discover eight historic NASA machines left on the Moon, Mars, and deep space.
 
 Rather than treating these probes as forgotten cosmic junk, **LAST WORDS** explores their final transmissions, celebrates the groundbreaking science they unlocked, and follows the hopeful horizon of future space archaeology, recycling, and heritage preservation.
 
 Two machines on the site are **not silent**:
-- **Voyager 1** is still transmitting from interstellar space, crossing the one light-day distance threshold in November 2026.
+- **Voyager 1** is still transmitting from interstellar space, crossing the one light-day distance threshold on November 18, 2026.
 - The **Apollo 11 Laser Retroreflector** still answers laser pulses from Earth observatories today with zero electrical power.
 
 ---
 
-## 🌟 Key Features
+## 🚀 Two Exploration Modes
 
-1. **The Silence Timeline (1967 – Now):**
-   - Responsive horizontal (desktop) and vertical (mobile) timeline showing the exact chronology of final signals.
-   - Categorized by **Moon** (Moon silver), **Mars** (Mars rust), and **Deep space** (Deep-space violet) with instant filter chips.
-2. **Terminal Final Logs:**
-   - Monospace typewriter animation dramatizing each probe's final moments based strictly on real flight telemetry.
-   - Includes "Skip animation" control, full screen-reader accessibility (`aria-live="off"`, visually hidden complete text in the DOM), and pedagogical disclosure notes.
-3. **Hydration-Safe Silence Clock:**
-   - Real-time client clock tracking the exact elapsed duration since each machine's final transmission.
-   - For active craft, tracks active days and one-way light delay times.
-4. **Scroll-Decaying Signal Visualizer:**
-   - SVG carrier waveform that flatlines as the user navigates through the log (or continuously pulses for active emissaries), honoring `prefers-reduced-motion`.
-5. **Interactive Then & Now Sliders:**
-   - Fully keyboard-accessible (`<input type="range">` driving clip-path) comparing operational prime imagery against resting or orbital views from NASA's archives.
-6. **Built for X, Lasted Y:**
-   - Hand-built custom SVG comparison bars displaying design specifications vs. actual operational lifespans.
-7. **The Science It Made Possible & Try It:**
-   - Kid-friendly scientific impact cards (Core Idea, Instrument Findings, Modern Significance) plus practical home/classroom mini-experiments.
-8. **Mission Debrief Quizzes & Listener Badge:**
-   - 3 questions per mission with instant scientific feedback and explanations.
-   - Stores progress in `localStorage` to award the gold **Deep Space Listener Badge** on the homepage.
-9. **Voyager 1 Light-Day Moment:**
-   - Live countdown to the historic moment on **November 18, 2026 at 10:16:07 UTC** when Voyager 1 reaches one light-day from Earth.
-10. **Educator Mode (`/teachers`):**
-    - 20-minute turnkey lesson plan (Hook, Explore, Discuss, Exit Ticket).
-    - 6 guided ethics/science debate prompts.
-    - One-page printable student worksheet formatted for standard paper printouts via `@media print`.
-11. **Methodology & Rights (`/about`):**
-    - Transparent fact-checking protocol, complete image rights registry, and full bibliography.
-12. **Subtle Off-by-Default Telemetry Audio:**
-    - Zero external sound files: uses native Web Audio API oscillators to generate gentle radio blips and telemetry clicks if explicitly toggled by the user.
+1. **🚀 Little Explorers (Default for First-Time Visitors):**
+   - **Storybook aesthetic:** Deep indigo celestial gradients, soft glowing stars, chunky rounded shapes (24-32px radii), and warm friendly outlines.
+   - **Typography:** `Fredoka` (playful headings and buttons) and `Atkinson Hyperlegible` (body). Base font size 20-24px.
+   - **Original Mascot "Ping":** A friendly teal companion with radio-wave ears and a pulsing antenna who introduces each friend and shares bedtime-story reflections.
+   - **Interactive Picture Books:** 6-panel stages per machine with custom animations, picture-first storytelling, and 1-2 sentence child-friendly copy.
+   - **Read-Aloud Narration:** Powered by the browser Web Speech API (`speechSynthesis`) with warm pitch, gentle pace, and word tracking.
+   - **Interactive WordBubbles:** Tap highlighted vocabulary (*rover, lander, dust storm, solar panel, laser, Mars day, shake sensor, nuclear battery*) for instant explanations.
+   - **Instant-Feedback Picture Quizzes:** Big pillow buttons, gentle wiggles for retries, cheerful dings, and stars for correct answers. Never a failing score.
+   - **Sticker Book & Confetti:** Collect 8 machine badges and 4 game medals stored in `localStorage`.
+   - **Interactive Mini-Games:**
+     - *Wipe the Dust* (Opportunity & InSight solar array cleaning)
+     - *Fly Ingenuity* (hover inside target band to complete flights)
+     - *Catch the Signal* (antenna dish radio wave collector)
+     - *Moon Echo* (real-time 2.56-second round-trip laser timer)
+
+2. **📡 Mission Control Mode (Detailed Scientific Experience):**
+   - Retains 100% of the deep technical telemetry, transmission logs, Then & Now interactive sliders, scientific impact breakdowns, primary NASA citations, and educator lesson plans.
+   - Upgraded with hardware illustrations (faces off), layered parallax backdrops, plain-English executive summaries, and chronological reordering.
+   - Fully toggleable from the header switch or via URL demo parameters:
+     - `https://last-words1.vercel.app/?mode=kids`
+     - `https://last-words1.vercel.app/?mode=control`
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## 🌟 Accessibility & Safety Features
 
-- **Framework:** Next.js (App Router, static generation with `generateStaticParams`)
-- **Language:** TypeScript (Strict mode)
-- **Styling:** Tailwind CSS (Custom mission control palette & CSS starfield)
-- **Icons:** `lucide-react`
-- **Animation:** CSS keyframes, Framer Motion, canvas-confetti
-- **Typography:**
-  - Headings: `Space Grotesk`
-  - Body: `Atkinson Hyperlegible` (Designed for maximum readability and visual accessibility)
-  - Telemetry: `JetBrains Mono`
-- **Accessibility:** WCAG 2.2 AA compliant (High-contrast ratios, visible focus indicators, screen reader text, keyboard navigable).
+- **Calm Mode:** A visible toggle in the header stops all non-essential animations, keyframe drifts, and sound effects; automatically activated when `prefers-reduced-motion` is detected.
+- **Text Scaler (A A A):** One-click toggle between Normal (20px), Large (22px), and Extra Large (24px) base typography.
+- **Privacy & Kid Safety:** Zero trackers, zero ads, zero external third-party scripts, and zero network calls. All progress is stored strictly in client-side `localStorage` wrapped in protective `try/catch` blocks.
+- **Screen Reader Support:** Full story text is preserved in the DOM using `sr-only` accessibility classes. Speeches use `aria-live="off"` so screen readers are never interrupted.
+- **Touch-Friendly Pillow Targets:** Minimum 64px tap targets in kid mode and 44px in Mission Control mode.
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Architecture & Component Structure
 
-### Prerequisites
-- Node.js 18.18+ or 20+ (Node 24 supported)
-- npm 9+
-
-### Installation & Setup
-
-```bash
-# Clone the repository
-git clone <repo-url>
-cd last-words
-
-# Install dependencies
-npm install
-
-# Run data validation test
-npm run validate:data
-
-# Start local development server
-npm run dev
+```text
+src/
+├── app/
+│   ├── layout.tsx              # Root layout, Google Fonts (Fredoka, Atkinson, Space Grotesk, JetBrains Mono)
+│   ├── page.tsx                # Dual-mode dynamic home switcher
+│   ├── globals.css             # Tailwind 4, cosmic background, custom keyframe physics
+│   ├── machines/[slug]/        # Dynamic route for all 8 machines
+│   ├── teachers/               # Lesson plan, discussion guide & printable coloring sheets
+│   └── about/                  # Methodology, source citations, image rights registry
+├── components/
+│   ├── Navbar.tsx              # Mode switcher, sound toggle, sticker count, skip link
+│   ├── ModeSwitch.tsx          # Little Explorers / Mission Control / Calm mode / Text scaler
+│   ├── ModeGate.tsx            # First-visit welcome modal
+│   ├── SilenceTimeline.tsx     # Chronological (1967 - Present) signal timeline
+│   ├── BuiltForLastedBar.tsx   # Engineering endurance comparison bars
+│   ├── ThenNowSlider.tsx       # Interactive image comparison slider
+│   ├── Quiz.tsx                # Instant-feedback mission debrief quiz
+│   └── kids/
+│       ├── Ping.tsx            # Animated original mascot (idle, blink, listen, cheer, wave)
+│       ├── MachineIllustration.tsx # Custom inline SVGs for all 8 machines
+│       ├── SceneBackdrop.tsx   # Layered parallax Moon, Mars, and Deep Space backdrops
+│       ├── StoryStage.tsx      # 6-panel picture book stage
+│       ├── WordBubble.tsx      # Child-friendly interactive glossary tooltips
+│       ├── KidQuiz.tsx         # Picture-based 3-question quiz with instant feedback
+│       ├── StickerBookModal.tsx# Explorer badge collection modal
+│       └── games/
+│           ├── GameModal.tsx   # Unified mini-game modal container
+│           ├── WipeDustGame.tsx    # Martian solar panel wiper game
+│           ├── FlyIngenuityGame.tsx# Mars rotorcraft altitude controller
+│           ├── CatchSignalGame.tsx # Deep space dish signal receiver
+│           └── MoonEchoGame.tsx    # 2.56-second real-time laser echo timer
+├── context/
+│   ├── ModeContext.tsx         # Kids vs Control mode state & URL sync
+│   ├── SoundContext.tsx        # Web Audio API sound synthesis
+│   ├── NarrationContext.tsx    # Web Speech API speech synthesis
+│   └── StickerContext.tsx      # LocalStorage sticker management
+└── data/
+    ├── machines.ts             # Primary mission data & citations (8 machines)
+    ├── kidStories.ts           # 6-panel seed copy, animation cues, fact references
+    ├── glossaryKids.ts         # Kid vocabulary explanations
+    └── types.ts                # TypeScript interfaces
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) in your browser.
+---
+
+## 📝 How to Add a New Machine
+
+To add a new spacecraft or rover without breaking data validation:
+
+1. **Add Mission Telemetry to `src/data/machines.ts`:**
+   - Define a unique `slug` (e.g., `spirit`).
+   - Add verified `launchISO` and `lastSignalISO` (ISO 8601 strings).
+   - Provide at least 2 primary NASA source URLs starting with `http`.
+   - Add `images` (`then` and `now`) with alt text, visible credit, and NASA source URL.
+   - Add 3 `quiz` questions with options, 0-indexed `correctAnswer`, and scientific explanations.
+   - Maintain chronological sorting by `lastSignalISO` (silent machines) followed by active machines (`still-talking` / `still-answering`).
+
+2. **Add Kid Story to `src/data/kidStories.ts`:**
+   - Add an entry keyed by `slug`.
+   - Write 6 concise panels (1-2 short sentences, <= 12 words per sentence, first person).
+   - Specify animation cues (`float-down`, `roll-in`, `dig`, `dust-storm`, `laser-bounce`, etc.).
+   - Add a `factRef` linking to the matching entry in `whatReallyHappened`.
+   - Add 3 picture-based quiz questions with fun icons.
+
+3. **Add Illustration in `src/components/kids/MachineIllustration.tsx`:**
+   - Add a branch for the machine's slug inside the SVG renderer.
+   - Model the accurate hardware components (landing pads, antenna dish, solar panels, RTG booms).
+   - Support `face={true}` (kids mode) and `outline={true}` (printable coloring sheets).
+
+4. **Verify and Build:**
+   ```bash
+   npm run validate:data
+   npm run build
+   ```
 
 ---
 
 ## 🧪 Testing & Validation
 
-The project includes an automated data validator that executes before every production build:
-
 ```bash
+# 1. Run strict fact and data validation guardrails
 npm run validate:data
-```
 
-The validator verifies:
-- Every machine contains $\ge 2$ primary NASA citations.
-- All launch and signal timestamps are valid ISO dates.
-- Every image has valid descriptive alt text, visible credits, and official source URLs.
-- All quiz question answer indices are within valid option bounds.
-
-To build the optimized production build:
-
-```bash
-npm run build
-```
-
----
-
-## 🚢 Deployment Guide
-
-**LAST WORDS** requires zero external databases, accounts, or proprietary API keys. It can be deployed in seconds to any modern hosting environment:
-
-### 1. Vercel (Recommended for Next.js)
-The easiest way to deploy is through Vercel:
-1. Push your repository to GitHub.
-2. Import the project into [Vercel](https://vercel.com/new).
-3. The framework preset will automatically detect Next.js.
-4. Click **Deploy**. Vercel will run `npm run validate:data` and `npm run build` automatically.
-
-Alternatively, via the Vercel CLI:
-```bash
-npx vercel --prod
-```
-
-### 2. Docker Container (Self-Hosted / VPS)
-A production multi-stage `Dockerfile` and `docker-compose.yml` are provided in the repository root:
-
-```bash
-# Build and run the production container in the background
-docker compose up -d --build
-```
-Access the application on port `3000`: `http://localhost:3000` (or behind a reverse proxy like Nginx or Caddy).
-
-### 3. Netlify
-1. Link your GitHub repository in Netlify.
-2. Build command: `npm run build`
-3. Publish directory: `.next`
-
-### 4. Self-Hosted Node.js Server
-To run the production server directly on any Linux, macOS, or Windows machine:
-```bash
-# Build the production bundle
+# 2. Compile Next.js production build & typecheck
 npm run build
 
-# Start the high-performance production server on port 3000
-npm run start
+# 3. Capture mobile (390x844) and desktop (1440x900) test screenshots
+node scripts/take-screenshots.mjs
 ```
 
 ---
 
-## 📚 Fact-Checking & Primary Sources
+## ⚖️ Competition & Attribution Disclaimer
 
-All facts on this site are sourced strictly from primary government and educational repositories:
-- NASA Science Mission Directorates: [science.nasa.gov](https://science.nasa.gov)
-- NASA Jet Propulsion Laboratory (JPL): [jpl.nasa.gov](https://www.jpl.nasa.gov)
-- NASA Technical Reports Server (NTRS): [ntrs.nasa.gov](https://ntrs.nasa.gov)
-- NASA Image and Video Library: [images-api.nasa.gov](https://images.nasa.gov)
-
----
-
-## ⚖️ Competition & Legal Disclaimer
-
-*Independent student project made for the NASA Space Apps Challenge 2026. Not affiliated with or endorsed by NASA.*
+*Independent student project created for the NASA Space Apps Challenge 2026. Not affiliated with or endorsed by NASA.* All imagery, data logs, and mission parameters originate from public domain NASA, JPL, and NTRS scientific archives. Full citations and rights registries are published on [/about](https://last-words1.vercel.app/about).

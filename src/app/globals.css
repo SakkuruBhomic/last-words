@@ -16,6 +16,16 @@
   --color-moon-silver: #c9d1dc;
   --color-deep-space-violet: #8e7cff;
   --color-alive-cyan: #3ee6c3;
+
+  /* Little Explorers Storybook Palette */
+  --color-kids-night: #0B1033;
+  --color-kids-night-light: #1B1F5E;
+  --color-kids-sunshine: #FFD34E;
+  --color-kids-mars: #FF7A45;
+  --color-kids-moon: #F4EFE6;
+  --color-kids-mint: #5BE3C0;
+  --color-kids-bubblegum: #FF8FB1;
+  --color-kids-sky: #6CB8FF;
 }
 
 @theme {
@@ -35,6 +45,7 @@
   --font-display: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
   --font-body: var(--font-atkinson), system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-jetbrains-mono), monospace;
+  --font-kid-heading: var(--font-fredoka), system-ui, sans-serif;
 }
 
 /* Base resets & styles */
@@ -48,6 +59,38 @@ html {
   color-scheme: dark;
 }
 
+/* Little Explorers Mode Typography & Radii */
+html[data-mode="kids"] {
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.65;
+}
+
+html[data-mode="kids"] h1,
+html[data-mode="kids"] h2,
+html[data-mode="kids"] h3,
+html[data-mode="kids"] h4,
+html[data-mode="kids"] h5,
+html[data-mode="kids"] h6,
+html[data-mode="kids"] button {
+  font-family: var(--font-kid-heading);
+  letter-spacing: 0.01em;
+}
+
+html[data-mode="kids"] code,
+html[data-mode="kids"] pre {
+  font-family: var(--font-body);
+}
+
+/* Text Size Scaler (A A A) */
+html[data-text-size="large"] {
+  font-size: 22px;
+}
+
+html[data-text-size="xlarge"] {
+  font-size: 24px;
+}
+
 body {
   background-color: var(--color-void);
   color: var(--color-text);
@@ -57,18 +100,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Headings font */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  letter-spacing: -0.025em;
-}
-
-/* Monospace font */
-code, pre, .font-mono, [data-mono] {
-  font-family: var(--font-mono);
-}
-
-/* Subtly animated CSS starfield (lightweight, zero JS, pure CSS) */
+/* Cosmic starfield */
 .cosmic-background {
   background-color: #04060b;
   background-image: 
@@ -77,11 +109,11 @@ code, pre, .font-mono, [data-mono] {
     radial-gradient(1.5px 1.5px at 280px 210px, rgba(255, 176, 32, 0.5), transparent),
     radial-gradient(1px 1px at 400px 320px, rgba(201, 209, 220, 0.35), transparent),
     radial-gradient(1px 1px at 550px 180px, rgba(142, 124, 255, 0.4), transparent),
-    radial-gradient(1.5px 1.5px at 700px 420px, rgba(62, 230, 195, 0.4), transparent);
+    radial-gradient(1.5px 1.5px at 700px 420px, rgba(91, 227, 192, 0.4), transparent);
   background-size: 650px 500px;
 }
 
-/* Scanline overlay for Final Log terminals */
+/* Scanlines for terminal logs */
 .scanlines {
   position: relative;
 }
@@ -97,31 +129,166 @@ code, pre, .font-mono, [data-mono] {
   opacity: 0.6;
 }
 
-/* Focus visibility for accessibility */
+/* Accessible focus styling */
 a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
-  outline: 2px solid var(--color-signal-amber);
+  outline: 3px solid #5BE3C0;
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
-/* Reduced motion preference */
+/* ============================================================== */
+/* KEYFRAME ANIMATIONS (Physics & Playful Motion)                  */
+/* ============================================================== */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes shootingStar {
+  0% { transform: translateX(0) translateY(0) rotate(-25deg); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(350px) translateY(180px) rotate(-25deg); opacity: 0; }
+}
+
+@keyframes starDrift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-30px); }
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+@keyframes spinFast {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes hoverHeli {
+  0%, 100% { transform: translateY(0px) rotate(-1deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+
+@keyframes digAction {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-12deg); }
+}
+
+@keyframes laserTravel {
+  0% { left: 0%; opacity: 1; }
+  100% { left: 100%; opacity: 1; }
+}
+
+@keyframes laserReturn {
+  0% { left: 100%; opacity: 1; }
+  100% { left: 0%; opacity: 1; }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.animate-shooting-star {
+  animation: shootingStar 1.8s ease-out infinite;
+}
+
+.animate-star-drift {
+  animation: starDrift 20s linear infinite alternate;
+}
+
+.animate-pop-in {
+  animation: popIn 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+.animate-wiggle {
+  animation: wiggle 0.4s ease-in-out;
+}
+
+.animate-hover-helicopter {
+  animation: hoverHeli 2.5s ease-in-out infinite;
+}
+
+.animate-spin-fast {
+  animation: spinFast 0.15s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spinReverse 0.15s linear infinite;
+}
+
+.animate-dig {
+  animation: digAction 1.2s ease-in-out infinite;
+}
+
+.animate-laser-travel {
+  animation: laserTravel 1.28s linear forwards;
+}
+
+.animate-laser-return {
+  animation: laserReturn 1.28s linear forwards;
+}
+
+/* Calm Mode & Reduced Motion (Stops all non-essential motion & sound) */
+html[data-calm="true"] *,
+html[data-calm="true"] *::before,
+html[data-calm="true"] *::after,
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
 }
 
-/* Print styling for teachers worksheet */
+/* Print styling for teachers and coloring book pages */
 @media print {
   body {
     background: #ffffff !important;
     color: #000000 !important;
     font-size: 12pt !important;
   }
-  .no-print {
+  .no-print, header, footer {
     display: none !important;
   }
   .print-only {

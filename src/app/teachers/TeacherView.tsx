@@ -1,10 +1,23 @@
 "use client";
 
-import { Printer, BookOpen, Clock, MessageSquare, PenTool } from "lucide-react";
+import { useState } from "react";
+import { Printer, BookOpen, Clock, MessageSquare, PenTool, Palette, Sparkles } from "lucide-react";
+import MachineIllustration from "@/components/kids/MachineIllustration";
+import { MACHINES } from "@/data/machines";
 
 export default function TeacherView() {
-  const handlePrint = () => {
+  const [selectedColoringSlug, setSelectedColoringSlug] = useState<string | null>(null);
+
+  const handlePrintWorksheet = () => {
+    setSelectedColoringSlug(null);
     window.print();
+  };
+
+  const handlePrintColoring = (slug: string) => {
+    setSelectedColoringSlug(slug);
+    setTimeout(() => {
+      window.print();
+    }, 150);
   };
 
   const discussionQuestions = [
@@ -16,6 +29,8 @@ export default function TeacherView() {
     "If you were designing a spacecraft to last for 100 years in deep space, what power source and communication system would you choose?"
   ];
 
+  const selectedMachine = MACHINES.find((m) => m.slug === selectedColoringSlug);
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Screen-Only Educator Header */}
@@ -24,18 +39,18 @@ export default function TeacherView() {
           <div>
             <div className="inline-flex items-center space-x-2 text-xs font-mono text-[var(--color-signal-amber)] mb-1">
               <BookOpen className="w-4 h-4" />
-              <span>EDUCATOR CURRICULUM // GRADES 5 - 10</span>
+              <span>EDUCATOR CURRICULUM &amp; COLORING // ALL AGES</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-white">
-              LAST WORDS: Teacher Guide &amp; Lesson Plan
+              LAST WORDS: Teacher Guide &amp; Coloring Pages
             </h1>
             <p className="text-sm text-[var(--color-muted)] mt-1 max-w-2xl">
-              A 20-minute standards-aligned science communication and engineering lesson using real NASA mission telemetry.
+              Turnkey science communication lesson plans for older students (Grades 5-10) and printable outline coloring sheets for young explorers (Grades K-3).
             </p>
           </div>
 
           <button
-            onClick={handlePrint}
+            onClick={handlePrintWorksheet}
             type="button"
             className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-[var(--color-signal-amber)] text-black font-mono font-bold text-xs hover:opacity-90 shadow-xl transition-all self-start sm:self-auto cursor-pointer"
           >
@@ -43,6 +58,52 @@ export default function TeacherView() {
             <span>Print Student Worksheet</span>
           </button>
         </div>
+
+        {/* ======================================================== */}
+        {/* NEW: Printable Coloring Pages for Little Children (K-3)  */}
+        {/* ======================================================== */}
+        <section className="my-10 p-6 sm:p-8 rounded-3xl border-2 border-[#5BE3C0]/40 bg-[#0B1033] shadow-xl">
+          <div className="flex items-center space-x-2 text-xs font-display font-bold text-[#5BE3C0] mb-2">
+            <Palette className="w-4 h-4" />
+            <span>EARLY CHILDHOOD ART &amp; SCIENCE // GRADES K - 3</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
+            Printable Explorer Coloring Pages
+          </h2>
+          <p className="text-sm text-gray-300 max-w-2xl mb-6">
+            Tap &ldquo;Print Coloring Sheet&rdquo; on any explorer to print a full-page clean outline version ready for crayons and markers!
+          </p>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {MACHINES.map((m) => (
+              <div
+                key={m.slug}
+                className="p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-between text-center"
+              >
+                <div className="w-full h-32 flex items-center justify-center bg-white rounded-xl mb-3 p-1">
+                  <MachineIllustration
+                    slug={m.slug}
+                    mood="awake"
+                    size={130}
+                    outline={true}
+                    face={true}
+                    showPhotoToggle={false}
+                  />
+                </div>
+                <h3 className="font-display font-bold text-sm text-white line-clamp-1 mb-2">
+                  {m.name}
+                </h3>
+                <button
+                  onClick={() => handlePrintColoring(m.slug)}
+                  className="w-full py-1.5 px-3 rounded-lg bg-[#5BE3C0] text-black font-display font-bold text-xs hover:opacity-90 flex items-center justify-center gap-1 cursor-pointer"
+                >
+                  <Printer className="w-3.5 h-3.5" />
+                  <span>Print Sheet</span>
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* 20-Minute Turnkey Lesson Plan Breakdown */}
         <section className="my-10 p-6 sm:p-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)]">
@@ -164,95 +225,123 @@ export default function TeacherView() {
       </div>
 
       {/* ======================================================== */}
-      {/* PRINTABLE ONE-PAGE STUDENT WORKSHEET (@media print optimized) */}
+      {/* PRINT-ONLY VIEW: EITHER COLORING PAGE OR WORKSHEET       */}
       {/* ======================================================== */}
-      <div className="print-only mt-8 p-6 bg-white text-black border-2 border-black rounded-lg">
-        {/* Printable Header */}
-        <div className="border-b-2 border-black pb-4 mb-4 flex justify-between items-start">
+      {selectedColoringSlug && selectedMachine ? (
+        // Print-only Full Page Coloring Sheet
+        <div className="print-only p-8 bg-white text-black text-center min-h-[95vh] flex flex-col justify-between items-center border-4 border-black">
           <div>
-            <h2 className="text-2xl font-black tracking-tight">
-              LAST WORDS: NASA Mission Telemetry Worksheet
-            </h2>
-            <p className="text-xs text-gray-700">
-              NASA Space Apps Challenge 2026 Student Investigation (Grades 5-10)
+            <h1 className="text-3xl font-black tracking-tight mb-1">
+              {selectedMachine.name} ({selectedMachine.destination})
+            </h1>
+            <p className="text-sm text-gray-600 mb-6">
+              NASA Space Apps Challenge 2026 // Explorer Coloring Page
             </p>
           </div>
-          <div className="text-xs space-y-1 text-right">
-            <div><strong>Student Name:</strong> _______________________</div>
-            <div><strong>Date:</strong> ___________ <strong>Period:</strong> ______</div>
+
+          <div className="w-full max-w-lg my-auto py-8">
+            <MachineIllustration
+              slug={selectedMachine.slug}
+              mood="awake"
+              size={480}
+              outline={true}
+              face={true}
+              showPhotoToggle={false}
+            />
+          </div>
+
+          <div className="w-full text-left pt-6 border-t-2 border-black flex justify-between items-end text-xs">
+            <div>
+              <p className="font-bold">{selectedMachine.oneLiner}</p>
+              <p className="text-gray-500 mt-1">Color with crayons, colored pencils, or markers!</p>
+            </div>
+            <div className="text-right">
+              <span className="font-mono">LAST WORDS (last-words1.vercel.app)</span>
+            </div>
           </div>
         </div>
+      ) : (
+        // Print-only Student Worksheet
+        <div className="print-only mt-8 p-6 bg-white text-black border-2 border-black rounded-lg">
+          <div className="border-b-2 border-black pb-4 mb-4 flex justify-between items-start">
+            <div>
+              <h2 className="text-2xl font-black tracking-tight">
+                LAST WORDS: NASA Mission Telemetry Worksheet
+              </h2>
+              <p className="text-xs text-gray-700">
+                NASA Space Apps Challenge 2026 Student Investigation (Grades 5-10)
+              </p>
+            </div>
+            <div className="text-xs space-y-1 text-right">
+              <div><strong>Student Name:</strong> _______________________</div>
+              <div><strong>Date:</strong> ___________ <strong>Period:</strong> ______</div>
+            </div>
+          </div>
 
-        {/* Instructions */}
-        <div className="text-xs mb-4 p-2 bg-gray-100 border border-gray-300">
-          <strong>Instructions:</strong> Open <em>LAST WORDS</em> on your device. Choose two machines from different destinations (Moon, Mars, or Deep Space) to investigate and compare below.
-        </div>
+          <div className="text-xs mb-4 p-2 bg-gray-100 border border-gray-300">
+            <strong>Instructions:</strong> Open <em>LAST WORDS</em> on your device. Choose two machines from different destinations (Moon, Mars, or Deep Space) to investigate and compare below.
+          </div>
 
-        {/* Machine Comparison Table */}
-        <div className="grid grid-cols-2 gap-4 text-xs mb-4">
-          {/* Machine 1 */}
-          <div className="border border-black p-3">
-            <div className="font-bold border-b border-black pb-1 mb-2">
-              MACHINE #1: ___________________________
+          <div className="grid grid-cols-2 gap-4 text-xs mb-4">
+            <div className="border border-black p-3">
+              <div className="font-bold border-b border-black pb-1 mb-2">
+                MACHINE #1: ___________________________
+              </div>
+              <div className="space-y-2">
+                <div>Destination (Moon/Mars/Deep space): ______________</div>
+                <div>Planned Life: _____________ Actual Life: _____________</div>
+                <div>Why did it stop transmitting (or why is it still talking)?</div>
+                <div className="h-10 border-b border-dotted border-gray-400"></div>
+                <div>One major scientific discovery it made:</div>
+                <div className="h-10 border-b border-dotted border-gray-400"></div>
+              </div>
+            </div>
+
+            <div className="border border-black p-3">
+              <div className="font-bold border-b border-black pb-1 mb-2">
+                MACHINE #2: ___________________________
+              </div>
+              <div className="space-y-2">
+                <div>Destination (Moon/Mars/Deep space): ______________</div>
+                <div>Planned Life: _____________ Actual Life: _____________</div>
+                <div>Why did it stop transmitting (or why is it still talking)?</div>
+                <div className="h-10 border-b border-dotted border-gray-400"></div>
+                <div>One major scientific discovery it made:</div>
+                <div className="h-10 border-b border-dotted border-gray-400"></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-xs mb-4 border border-black p-3">
+            <div className="font-bold mb-1">
+              CRITICAL THINKING: Preserve, Recycle, or Reuse?
+            </div>
+            <p className="text-gray-700 mb-2">
+              Should future human astronauts on the Moon protect historic probes like Surveyor 3 as heritage parks, or recycle their metal to build shelters? Give one reason for your choice:
+            </p>
+            <div className="h-12 border-b border-dotted border-gray-400"></div>
+          </div>
+
+          <div className="text-xs border border-black p-3">
+            <div className="font-bold mb-1">
+              EXIT TICKET: Write a 3-Line Mission-End Message for a Machine of Your Own Design
+            </div>
+            <div className="text-gray-600 mb-2">
+              Machine Name: _____________________ Destination: _____________________
             </div>
             <div className="space-y-2">
-              <div>Destination (Moon/Mars/Deep space): ______________</div>
-              <div>Planned Life: _____________ Actual Life: _____________</div>
-              <div>Why did it stop transmitting (or why is it still talking)?</div>
-              <div className="h-10 border-b border-dotted border-gray-400"></div>
-              <div>One major scientific discovery it made:</div>
-              <div className="h-10 border-b border-dotted border-gray-400"></div>
+              <div className="border-b border-gray-300 pb-1">Line 1: ____________________________________________________________________</div>
+              <div className="border-b border-gray-300 pb-1">Line 2: ____________________________________________________________________</div>
+              <div className="border-b border-gray-300 pb-1">Line 3: ____________________________________________________________________</div>
+              <div className="text-right text-gray-700">[ FINAL STATUS TAG: _______________________ ]</div>
             </div>
           </div>
 
-          {/* Machine 2 */}
-          <div className="border border-black p-3">
-            <div className="font-bold border-b border-black pb-1 mb-2">
-              MACHINE #2: ___________________________
-            </div>
-            <div className="space-y-2">
-              <div>Destination (Moon/Mars/Deep space): ______________</div>
-              <div>Planned Life: _____________ Actual Life: _____________</div>
-              <div>Why did it stop transmitting (or why is it still talking)?</div>
-              <div className="h-10 border-b border-dotted border-gray-400"></div>
-              <div>One major scientific discovery it made:</div>
-              <div className="h-10 border-b border-dotted border-gray-400"></div>
-            </div>
+          <div className="mt-4 pt-2 border-t border-gray-400 text-[10px] text-gray-500 text-center">
+            LAST WORDS // NASA Space Apps Challenge 2026 Educational Worksheet. Not affiliated with or endorsed by NASA.
           </div>
         </div>
-
-        {/* Critical Thinking Question */}
-        <div className="text-xs mb-4 border border-black p-3">
-          <div className="font-bold mb-1">
-            CRITICAL THINKING: Preserve, Recycle, or Reuse?
-          </div>
-          <p className="text-gray-700 mb-2">
-            Should future human astronauts on the Moon protect historic probes like Surveyor 3 as heritage parks, or recycle their metal to build shelters? Give one reason for your choice:
-          </p>
-          <div className="h-12 border-b border-dotted border-gray-400"></div>
-        </div>
-
-        {/* Exit Ticket / Creative Log */}
-        <div className="text-xs border border-black p-3">
-          <div className="font-bold mb-1">
-            EXIT TICKET: Write a 3-Line Mission-End Message for a Machine of Your Own Design
-          </div>
-          <div className="text-gray-600 mb-2">
-            Machine Name: _____________________ Destination: _____________________
-          </div>
-          <div className="space-y-2">
-            <div className="border-b border-gray-300 pb-1">Line 1: ____________________________________________________________________</div>
-            <div className="border-b border-gray-300 pb-1">Line 2: ____________________________________________________________________</div>
-            <div className="border-b border-gray-300 pb-1">Line 3: ____________________________________________________________________</div>
-            <div className="text-right text-gray-700">[ FINAL STATUS TAG: _______________________ ]</div>
-          </div>
-        </div>
-
-        {/* Printable Footer */}
-        <div className="mt-4 pt-2 border-t border-gray-400 text-[10px] text-gray-500 text-center">
-          LAST WORDS // NASA Space Apps Challenge 2026 Educational Worksheet. Not affiliated with or endorsed by NASA.
-        </div>
-      </div>
+      )}
     </div>
   );
 }

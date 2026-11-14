@@ -1,6 +1,7 @@
 import type { Machine } from "./types.ts";
 
 export const MACHINES: Machine[] = [
+  // 1. Surveyor 3 (Moon, 1967)
   {
     slug: "surveyor-3",
     name: "Surveyor 3",
@@ -8,10 +9,10 @@ export const MACHINES: Machine[] = [
     status: "silent",
     launchISO: "1967-04-17T07:05:01Z",
     lastSignalISO: "1967-05-04T00:04:00Z",
-    lastSignalLabel: "First lunar nightfall",
-    designed: { label: "Planned prime operations", value: 14, unit: "days" },
-    actual: { label: "Operational until nightfall; visited 30 months later", value: 14, unit: "days" },
-    oneLiner: "Soft-landed in a lunar crater, scooped lunar soil, and was visited by Apollo 12 astronauts 30 months later.",
+    lastSignalLabel: "Lunar nightfall (went quiet after about two weeks)",
+    designed: { label: "Planned operations", value: 14, unit: "days" },
+    actual: { label: "Worked about two weeks, then waited about two and a half years for visitors", value: 14, unit: "days" },
+    oneLiner: "Soft-landed in a lunar crater, scooped lunar soil, and was visited by Apollo 12 astronauts about two and a half years later.",
     finalLog: {
       stamp: "LUNAR NIGHTFALL | 04 MAY 1967",
       lines: [
@@ -37,12 +38,12 @@ export const MACHINES: Machine[] = [
       },
       {
         dateLabel: "04 MAY 1967",
-        text: "As the lunar sun set for a two-week night of -250°F (-157°C), solar power vanished. The lander went silent as planned after returning 6,315 images.",
+        text: "As the lunar sun set for a two-week night of -250°F (-157°C), solar power vanished. The lander went silent after about two weeks as battery power depleted.",
         sourceUrl: "https://science.nasa.gov/surveyor-3"
       },
       {
         dateLabel: "19-20 NOV 1969",
-        text: "Apollo 12 astronauts Pete Conrad and Alan Bean executed a pinpoint landing ~180 meters away, walked to Surveyor 3, and recovered its TV camera and scoop.",
+        text: "Apollo 12 astronauts Pete Conrad and Alan Bean executed a pinpoint landing ~180 meters away, walked to Surveyor 3, and removed its TV camera and scoop.",
         sourceUrl: "https://www.nasa.gov/mission_pages/apollo/missions/apollo12.html"
       }
     ],
@@ -82,7 +83,7 @@ export const MACHINES: Machine[] = [
     ],
     quiz: [
       {
-        q: "What unique historic event happened to Surveyor 3 thirty months after it landed?",
+        q: "What unique historic event happened to Surveyor 3 about two and a half years after it landed?",
         options: [
           "It unexpectedly woke up and flew back to Earth",
           "Apollo 12 astronauts walked to it and brought parts back home",
@@ -120,6 +121,8 @@ export const MACHINES: Machine[] = [
       "Described by NASA historians as the first human-made hardware retrieved and returned to Earth from another planetary body."
     ]
   },
+
+  // 2. Apollo 17 ALSEP (Moon, 1972 - 1977)
   {
     slug: "apollo-17-alsep",
     name: "Apollo 17 ALSEP",
@@ -237,122 +240,123 @@ export const MACHINES: Machine[] = [
       "Shutdown command was issued at 22:14 UTC on Sept 30, 1977. Several instruments could have continued operating for years if operations funding continued."
     ]
   },
+
+  // 3. Pioneer 10 (Deep space, 1972 - 2003) - Sorted chronologically by last signal!
   {
-    slug: "apollo-11-laser-reflector",
-    name: "Apollo 11 Laser Retroreflector",
-    destination: "Moon",
-    status: "still-answering",
-    launchISO: "1969-07-16T13:32:00Z",
-    lastSignalLabel: "Continuously answering laser pulses from Earth",
-    designed: { label: "Nominal operational lifetime", value: 10, unit: "years" },
-    actual: { label: "Still operational today (Passive reflection)", value: 57, unit: "years" },
-    oneLiner: "A zero-power mirror array left on the Sea of Tranquility that bounces pulses from Earth to measure the Moon's drift.",
+    slug: "pioneer-10",
+    name: "Pioneer 10",
+    destination: "Deep space",
+    status: "silent",
+    launchISO: "1972-03-02T01:49:04Z",
+    lastSignalISO: "2003-01-23T05:07:00Z",
+    lastSignalLabel: "RTG nuclear decay threshold",
+    designed: { label: "Jupiter flyby prime mission", value: 21, unit: "months" },
+    actual: { label: "Deep space transmission lifetime", value: 370, unit: "months" },
+    oneLiner: "First explorer through the Asteroid Belt and first to Jupiter, now coasting silently toward the star Aldebaran.",
     finalLog: {
-      stamp: "TRANQUILITY BASE | STILL ACTIVE",
+      stamp: "7.6 BILLION MILES | 23 JAN 2003",
       lines: [
-        "Placed by Armstrong and Aldrin on Mare Tranquillitatis regolith.",
-        "One hundred corner-cube quartz prisms facing the sky.",
-        "No batteries. No electronics. No moving parts.",
-        "Telescopes in Texas, France, and Hawaii fire green photons.",
-        "Two and a half seconds later, solitary photons return home.",
-        "I never speak. I only answer."
+        "Distance from Sun: 12.2 billion km. One-way light time: 11h 20m.",
+        "Radioisotope generators fading below transmitter voltage threshold.",
+        "Madrid 70-meter dish detects a very faint carrier signal.",
+        "Last telemetry received without sufficient power to modulate data.",
+        "Pioneer Plaque facing interstellar vacuum.",
+        "Course steady toward Aldebaran in the constellation Taurus."
       ],
-      endTag: "[ ECHO CONFIRMED | CONTINUOUS RETROREFLECTION ]"
+      endTag: "[ CARRIER FADED | SILENT INTERSTELLAR VOYAGE ]"
     },
     whatReallyHappened: [
       {
-        dateLabel: "21 JUL 1969",
-        text: "Buzz Aldrin leveled and oriented the Laser Ranging Retroreflector (LRRR) array about 14 meters south of the Eagle Lunar Module.",
-        sourceUrl: "https://science.nasa.gov/solar-system/moon/laser-reflector/"
+        dateLabel: "15 JUL 1972",
+        text: "Pioneer 10 entered the Asteroid Belt between Mars and Jupiter, proving that debris density was far lower than feared and spacecraft could pass safely.",
+        sourceUrl: "https://science.nasa.gov/mission/pioneer-10"
       },
       {
-        dateLabel: "01 AUG 1969",
-        text: "Lick Observatory in California scored the first successful return pulses, timing round-trip laser echoes to calculate distance to within meters.",
-        sourceUrl: "https://science.nasa.gov/solar-system/moon/laser-reflector/"
+        dateLabel: "03 DEC 1973",
+        text: "Passed within 130,000 km of Jupiter's cloud tops, taking the first close-up pictures of the Great Red Spot and mapping radiation belts.",
+        sourceUrl: "https://www.nasa.gov/feature/45-years-ago-pioneer-10-first-to-explore-jupiter"
       },
       {
-        dateLabel: "1969-PRESENT",
-        text: "Ground observatories continue firing laser pulses weekly. Modern timing achieves millimeter precision, monitoring lunar orbit variations across decades.",
-        sourceUrl: "https://www.nasa.gov/history/alsj/a11/a11.html"
+        dateLabel: "23 JAN 2003",
+        text: "NASA's Deep Space Network in Madrid detected the final whisper from Pioneer 10 at a distance of 12.23 billion km (7.6 billion miles).",
+        sourceUrl: "https://science.nasa.gov/mission/pioneer-10"
       }
     ],
     science: [
       {
-        idea: "Measuring the Earth-Moon Distance",
-        result: "Calculates the average 384,400 km Earth-Moon distance down to a few millimeters by timing round-trip photons traveling at 300,000 km/s.",
-        whyItMatters: "Discovered that tidal friction causes the Moon to spiral outward away from Earth by 3.8 centimeters (1.5 inches) every year."
+        idea: "Asteroid Belt Navigation Feasibility",
+        result: "Proved that the asteroid belt is mostly empty space and does not contain impenetrable curtains of dust.",
+        whyItMatters: "Cleared the path for every subsequent outer solar system mission, including Voyager 1 and 2, Galileo, Cassini, and New Horizons."
       },
       {
-        idea: "Testing Einstein's General Relativity",
-        result: "Verified the Equivalence Principle (that Earth and the Moon fall toward the Sun at identical accelerations regardless of composition) to 1 part in 10^13.",
-        whyItMatters: "Provides one of the most stringent experimental confirmations of Einstein's gravitational theory in the solar system."
+        idea: "First In-Situ Jupiter Radiation Mapping",
+        result: "Discovered Jupiter's magnetic field is millions of times stronger than Earth's and has intense trapped radiation belts.",
+        whyItMatters: "Forced engineers to heavily radiation-harden all future Jupiter orbiters like Galileo and Juno."
       },
       {
-        idea: "Zero-Power Longevity",
-        result: "Operates 57+ years with zero power consumption using passive corner-cube prisms that bounce light back at exactly the incidence angle.",
-        whyItMatters: "Proves that passive physical design can outlast active mechanical electronics by generations."
+        idea: "Deep Space Nuclear Longevity",
+        result: "Operated on four SNAP-19 radioisotope thermoelectric generators for over 30 years past its 21-month planned lifetime.",
+        whyItMatters: "Demonstrated the viability of nuclear decay power for interstellar probe missions."
       }
     ],
-    tryIt: "Hold a bicycle reflector up in a dark room and shine a small flashlight from next to your nose. Notice how bright it appears because the corner cubes reflect directly back to the source!",
+    tryIt: "Calculate how long it takes a radio message to travel across your room vs across the solar system (at the speed of light, 300,000 km/s)!",
     images: [
       {
-        src: "/images/apollo-11-laser-reflector/then.jpg",
-        alt: "Buzz Aldrin sets up the Early Apollo Scientific Experiments Package containing the Laser Ranging Retroreflector, July 1969",
-        credit: "NASA / Neil Armstrong",
-        sourceUrl: "https://images.nasa.gov/details/as11-40-5952",
+        src: "/images/pioneer-10/then.jpg",
+        alt: "Pioneer 10 with the iconic gold-anodized aluminum message plaque attached prior to launch, 1972",
+        credit: "NASA Ames Research Center",
+        sourceUrl: "https://images.nasa.gov/details/AC72-1542",
         kind: "then"
       },
       {
-        src: "/images/apollo-11-laser-reflector/now.jpg",
-        alt: "Green laser pulses directed from Earth observatory toward the Moon retroreflectors",
-        credit: "NASA / Goddard Space Flight Center",
-        sourceUrl: "https://images.nasa.gov/details/PIA13915",
+        src: "/images/pioneer-10/now.jpg",
+        alt: "Historic close-up view of Jupiter taken by Pioneer 10 in December 1973",
+        credit: "NASA / Ames Research Center",
+        sourceUrl: "https://images.nasa.gov/details/PIA01403",
         kind: "now"
       }
     ],
     quiz: [
       {
-        q: "How does the Apollo 11 Laser Retroreflector send signals back to Earth?",
+        q: "What message for potential extraterrestrial finders does Pioneer 10 carry on its chassis?",
         options: [
-          "A nuclear radio transmitter sends high-frequency microwave bursts",
-          "It does not transmit; it passively bounces laser beams shot from Earth back to their source",
-          "Solar panels power flashing LED beacons visible from Earth",
-          "It uses a satellite uplink through the Lunar Reconnaissance Orbiter"
-        ],
-        correctAnswer: 1,
-        explanation: "The retroreflector has no electronics or power supply; it consists of 100 quartz corner-cubes that bounce incoming lasers directly back to Earth."
-      },
-      {
-        q: "What startling discovery did laser ranging make about the Moon's orbit?",
-        options: [
-          "The Moon is falling towards Earth and will collide in 100 years",
-          "The Moon is spiraling away from Earth at about 3.8 cm (1.5 in) per year",
-          "The Moon stops orbiting during solar eclipses",
-          "The Moon is completely stationary in space"
-        ],
-        correctAnswer: 1,
-        explanation: "Tidal friction transfers rotational energy from Earth to the Moon, pushing its orbit outward by about 3.8 centimeters annually."
-      },
-      {
-        q: "Which other Apollo missions also left working laser retroreflectors on the Moon?",
-        options: [
-          "Apollo 14 and Apollo 15",
-          "Apollo 7 and Apollo 8",
-          "Apollo 13 only",
-          "None, Apollo 11 was the only one"
+          "A gold-anodized aluminum pictorial plaque designed by Carl Sagan and Frank Drake",
+          "A digital flash drive with Wikipedia",
+          "A brass key to the United Nations headquarters",
+          "A paper encyclopedia"
         ],
         correctAnswer: 0,
-        explanation: "Apollo 14 and Apollo 15 also deployed laser retroreflectors. The Apollo 15 array is three times larger and is the most frequently targeted."
+        explanation: "Pioneer 10 carries a gold-anodized plaque depicting human figures, the hydrogen atom transition, and our solar system's location relative to 14 pulsars."
+      },
+      {
+        q: "Which major celestial landmark did Pioneer 10 become the first human-made object to cross in 1972?",
+        options: [
+          "The Asteroid Belt between Mars and Jupiter",
+          "The Oort Cloud",
+          "The rings of Saturn",
+          "The Kuiper Belt"
+        ],
+        correctAnswer: 0,
+        explanation: "Pioneer 10 proved spacecraft could safely navigate through the asteroid belt without colliding with debris."
+      },
+      {
+        q: "Toward which bright red giant star is Pioneer 10 currently coasting in the constellation Taurus?",
+        options: ["Aldebaran", "Polaris (North Star)", "Betelgeuse", "Sirius"],
+        correctAnswer: 0,
+        explanation: "Pioneer 10 will take more than two million years to reach the vicinity of the red giant star Aldebaran."
       }
     ],
     sources: [
-      { label: "NASA Science - Apollo Lunar Laser Ranging", url: "https://science.nasa.gov/solar-system/moon/laser-reflector/" },
-      { label: "Apollo Lunar Surface Journal - Apollo 11", url: "https://www.nasa.gov/history/alsj/a11/a11.html" }
+      { label: "NASA Science - Pioneer 10 Overview", url: "https://science.nasa.gov/mission/pioneer-10" },
+      { label: "NASA Features - 45 Years Ago: Pioneer 10", url: "https://www.nasa.gov/feature/45-years-ago-pioneer-10-first-to-explore-jupiter" }
     ],
     footnotes: [
-      "Apollo 11, 14, and 15 retroreflectors, along with Soviet Lunokhod 1 and 2 reflectors, comprise the international Lunar Laser Ranging network."
+      "Last signal received Jan 23, 2003 UTC. Some local station logs recorded Jan 22 due to US local time difference.",
+      "The final signal required 11 hours and 20 minutes to cross the 12.23 billion kilometer expanse to Earth."
     ]
   },
+
+  // 4. Opportunity (Mars, 2004 - 2018)
   {
     slug: "opportunity",
     name: "Opportunity (MER-B)",
@@ -363,7 +367,7 @@ export const MACHINES: Machine[] = [
     lastSignalLabel: "Sol 5111 planet-wide dust storm",
     designed: { label: "Nominal prime mission", value: 90, unit: "sols" },
     actual: { label: "Total sols driven across Mars", value: 5111, unit: "sols" },
-    oneLiner: "The marathon rover that found definitive evidence of ancient Martian water and lasted 55 times its design life.",
+    oneLiner: "The marathon rover that found definitive evidence of ancient Martian water and lasted about 57 times its design life.",
     finalLog: {
       stamp: "SOL 5111 | 10 JUN 2018",
       lines: [
@@ -421,7 +425,7 @@ export const MACHINES: Machine[] = [
       },
       {
         src: "/images/opportunity/now.jpg",
-        alt: "Mars Reconnaissance Orbiter HiRISE image spotting Opportunity in Perseverance Valley during the 2018 dust storm",
+        alt: "Mars Reconnaissance Orbiter HiRISE orbital view spotting Opportunity in Perseverance Valley, photographed in September 2018 after the dust storm cleared",
         credit: "NASA / JPL-Caltech / Univ. of Arizona",
         sourceUrl: "https://images.nasa.gov/details/PIA22228",
         kind: "now"
@@ -443,7 +447,7 @@ export const MACHINES: Machine[] = [
         q: "How many sols was Opportunity originally designed to operate on Mars?",
         options: ["10,000 sols", "90 sols", "5,111 sols", "1 sol"],
         correctAnswer: 1,
-        explanation: "Opportunity was planned for a 90-sol prime mission (~3 months), but survived for 5,111 sols (over 14.5 Earth years)."
+        explanation: "Opportunity was planned for a 90-sol prime mission (~3 months), but survived for 5,111 sols (over 14.5 Earth years, about 57 times its design life)."
       },
       {
         q: "What caused Opportunity's final transmission on Sol 5111?",
@@ -467,6 +471,8 @@ export const MACHINES: Machine[] = [
       "Final transmission received June 10, 2018. Official mission conclusion declared Feb 13, 2019 after 1,000+ recovery attempts."
     ]
   },
+
+  // 5. InSight (Mars, 2018 - 2022)
   {
     slug: "insight",
     name: "InSight Lander",
@@ -584,6 +590,8 @@ export const MACHINES: Machine[] = [
       "Last communication occurred on Dec 15, 2022. NASA officially concluded operations on Dec 21, 2022 after two missed communication cycles."
     ]
   },
+
+  // 6. Ingenuity (Mars, 2021 - 2024)
   {
     slug: "ingenuity",
     name: "Ingenuity (Mars Helicopter)",
@@ -697,119 +705,127 @@ export const MACHINES: Machine[] = [
       "Flight 72 occurred Jan 18, 2024; mission retirement officially announced Jan 25, 2024. The helicopter remains upright at Airfield Chi."
     ]
   },
+
+  // 7. Apollo 11 Laser Retroreflector (Moon, 1969 - PRESENT) - ACTIVE "STILL ANSWERING"
   {
-    slug: "pioneer-10",
-    name: "Pioneer 10",
-    destination: "Deep space",
-    status: "silent",
-    launchISO: "1972-03-02T01:49:04Z",
-    lastSignalISO: "2003-01-23T05:07:00Z",
-    lastSignalLabel: "RTG nuclear decay threshold",
-    designed: { label: "Jupiter flyby prime mission", value: 21, unit: "months" },
-    actual: { label: "Deep space transmission lifetime", value: 370, unit: "months" },
-    oneLiner: "First explorer through the Asteroid Belt and first to Jupiter, now coasting silently toward the star Aldebaran.",
+    slug: "apollo-11-laser-reflector",
+    name: "Apollo 11 Laser Retroreflector",
+    destination: "Moon",
+    status: "still-answering",
+    launchISO: "1969-07-16T13:32:00Z",
+    lastSignalLabel: "Continuously answering laser pulses from Earth",
+    designed: { label: "No planned expiration (Passive mirror)", value: 0, unit: "years" },
+    actual: { label: "Still operational today (Passive reflection)", value: 57, unit: "years" },
+    oneLiner: "A zero-power mirror array left on the Sea of Tranquility that bounces pulses from Earth to measure the Moon's drift.",
     finalLog: {
-      stamp: "7.6 BILLION MILES | 23 JAN 2003",
+      stamp: "TRANQUILITY BASE | STILL ACTIVE",
       lines: [
-        "Distance from Sun: 12.2 billion km. One-way light time: 11h 20m.",
-        "Radioisotope generators fading below transmitter voltage threshold.",
-        "Madrid 70-meter dish detects a very faint carrier signal.",
-        "Last telemetry received without sufficient power to modulate data.",
-        "Pioneer Plaque facing interstellar vacuum.",
-        "Course steady toward Aldebaran in the constellation Taurus."
+        "Placed by Armstrong and Aldrin on Mare Tranquillitatis regolith.",
+        "One hundred corner-cube quartz prisms facing the sky.",
+        "No batteries. No electronics. No moving parts.",
+        "Telescopes in Texas, France, and Hawaii fire green photons.",
+        "Two and a half seconds later, solitary photons return home.",
+        "I never speak. I only answer."
       ],
-      endTag: "[ CARRIER FADED | SILENT INTERSTELLAR VOYAGE ]"
+      endTag: "[ ECHO CONFIRMED | CONTINUOUS RETROREFLECTION ]"
     },
     whatReallyHappened: [
       {
-        dateLabel: "15 JUL 1972",
-        text: "Pioneer 10 entered the Asteroid Belt between Mars and Jupiter, proving that debris density was far lower than feared and spacecraft could pass safely.",
-        sourceUrl: "https://science.nasa.gov/mission/pioneer-10"
+        dateLabel: "21 JUL 1969",
+        text: "Buzz Aldrin leveled and oriented the Laser Ranging Retroreflector (LRRR) array about 14 meters south of the Eagle Lunar Module.",
+        sourceUrl: "https://science.nasa.gov/solar-system/moon/laser-reflector/"
       },
       {
-        dateLabel: "03 DEC 1973",
-        text: "Passed within 130,000 km of Jupiter's cloud tops, taking the first close-up pictures of the Great Red Spot and mapping radiation belts.",
-        sourceUrl: "https://www.nasa.gov/feature/45-years-ago-pioneer-10-first-to-explore-jupiter"
+        dateLabel: "01 AUG 1969",
+        text: "Lick Observatory in California scored the first successful return pulses, timing round-trip laser echoes to calculate distance to within meters.",
+        sourceUrl: "https://science.nasa.gov/solar-system/moon/laser-reflector/"
       },
       {
-        dateLabel: "23 JAN 2003",
-        text: "NASA's Deep Space Network in Madrid detected the final whisper from Pioneer 10 at a distance of 12.23 billion km (7.6 billion miles).",
-        sourceUrl: "https://science.nasa.gov/mission/pioneer-10"
+        dateLabel: "1969-PRESENT",
+        text: "Ground observatories continue firing laser pulses weekly. Modern timing achieves millimeter precision, monitoring lunar orbit variations across decades.",
+        sourceUrl: "https://www.nasa.gov/history/alsj/a11/a11.html"
       }
     ],
     science: [
       {
-        idea: "Asteroid Belt Navigation Feasibility",
-        result: "Proved that the asteroid belt is mostly empty space and does not contain impenetrable curtains of dust.",
-        whyItMatters: "Cleared the path for every subsequent outer solar system mission, including Voyager 1 and 2, Galileo, Cassini, and New Horizons."
+        idea: "Measuring the Earth-Moon Distance",
+        result: "Calculates the average 384,400 km Earth-Moon distance down to a few millimeters by timing round-trip photons traveling at 300,000 km/s.",
+        whyItMatters: "Discovered that tidal friction causes the Moon to spiral outward away from Earth by 3.8 centimeters (1.5 inches) every year."
       },
       {
-        idea: "First In-Situ Jupiter Radiation Mapping",
-        result: "Discovered Jupiter's magnetic field is millions of times stronger than Earth's and has intense trapped radiation belts.",
-        whyItMatters: "Forced engineers to heavily radiation-harden all future Jupiter orbiters like Galileo and Juno."
+        idea: "Testing Einstein's General Relativity",
+        result: "Verified the Equivalence Principle (that Earth and the Moon fall toward the Sun at identical accelerations regardless of composition) to 1 part in 10^13.",
+        whyItMatters: "Provides one of the most stringent experimental confirmations of Einstein's gravitational theory in the solar system."
       },
       {
-        idea: "Deep Space Nuclear Longevity",
-        result: "Operated on four SNAP-19 radioisotope thermoelectric generators for over 30 years past its 21-month planned lifetime.",
-        whyItMatters: "Demonstrated the viability of nuclear decay power for interstellar probe missions."
+        idea: "Zero-Power Longevity",
+        result: "Operates 57+ years with zero power consumption using passive corner-cube prisms that bounce light back at exactly the incidence angle.",
+        whyItMatters: "Proves that passive physical design can outlast active mechanical electronics by generations."
       }
     ],
-    tryIt: "Calculate how long it takes a radio message to travel across your room vs across the solar system (at the speed of light, 300,000 km/s)!",
+    tryIt: "Hold a bicycle reflector up in a dark room and shine a small flashlight from next to your nose. Notice how bright it appears because the corner cubes reflect directly back to the source!",
     images: [
       {
-        src: "/images/pioneer-10/then.jpg",
-        alt: "Pioneer 10 with the iconic gold-anodized aluminum message plaque attached prior to launch, 1972",
-        credit: "NASA Ames Research Center",
-        sourceUrl: "https://images.nasa.gov/details/AC72-1542",
+        src: "/images/apollo-11-laser-reflector/then.jpg",
+        alt: "Buzz Aldrin sets up the Early Apollo Scientific Experiments Package containing the Laser Ranging Retroreflector, July 1969",
+        credit: "NASA / Neil Armstrong",
+        sourceUrl: "https://images.nasa.gov/details/as11-40-5952",
         kind: "then"
       },
       {
-        src: "/images/pioneer-10/now.jpg",
-        alt: "Historic close-up view of Jupiter taken by Pioneer 10 in December 1973",
-        credit: "NASA / Ames Research Center",
-        sourceUrl: "https://images.nasa.gov/details/PIA01403",
+        src: "/images/apollo-11-laser-reflector/now.jpg",
+        alt: "Green laser pulses directed from Earth observatory toward the Moon retroreflectors",
+        credit: "NASA / Goddard Space Flight Center",
+        sourceUrl: "https://images.nasa.gov/details/PIA13915",
         kind: "now"
       }
     ],
     quiz: [
       {
-        q: "What message for potential extraterrestrial finders does Pioneer 10 carry on its chassis?",
+        q: "How does the Apollo 11 Laser Retroreflector send signals back to Earth?",
         options: [
-          "A gold-anodized aluminum pictorial plaque designed by Carl Sagan and Frank Drake",
-          "A digital flash drive with Wikipedia",
-          "A brass key to the United Nations headquarters",
-          "A paper encyclopedia"
+          "A nuclear radio transmitter sends high-frequency microwave bursts",
+          "It does not transmit; it passively bounces laser beams shot from Earth back to their source",
+          "Solar panels power flashing LED beacons visible from Earth",
+          "It uses a satellite uplink through the Lunar Reconnaissance Orbiter"
         ],
-        correctAnswer: 0,
-        explanation: "Pioneer 10 carries a gold-anodized plaque depicting human figures, the hydrogen atom transition, and our solar system's location relative to 14 pulsars."
+        correctAnswer: 1,
+        explanation: "The retroreflector has no electronics or power supply; it consists of 100 quartz corner-cubes that bounce incoming lasers directly back to Earth."
       },
       {
-        q: "Which major celestial landmark did Pioneer 10 become the first human-made object to cross in 1972?",
+        q: "What startling discovery did laser ranging make about the Moon's orbit?",
         options: [
-          "The Asteroid Belt between Mars and Jupiter",
-          "The Oort Cloud",
-          "The rings of Saturn",
-          "The Kuiper Belt"
+          "The Moon is falling towards Earth and will collide in 100 years",
+          "The Moon is spiraling away from Earth at about 3.8 cm (1.5 in) per year",
+          "The Moon stops orbiting during solar eclipses",
+          "The Moon is completely stationary in space"
         ],
-        correctAnswer: 0,
-        explanation: "Pioneer 10 proved spacecraft could safely navigate through the asteroid belt without colliding with debris."
+        correctAnswer: 1,
+        explanation: "Tidal friction transfers rotational energy from Earth to the Moon, pushing its orbit outward by about 3.8 centimeters annually."
       },
       {
-        q: "Toward which bright red giant star is Pioneer 10 currently coasting in the constellation Taurus?",
-        options: ["Aldebaran", "Polaris (North Star)", "Betelgeuse", "Sirius"],
+        q: "Which other Apollo missions also left working laser retroreflectors on the Moon?",
+        options: [
+          "Apollo 14 and Apollo 15",
+          "Apollo 7 and Apollo 8",
+          "Apollo 13 only",
+          "None, Apollo 11 was the only one"
+        ],
         correctAnswer: 0,
-        explanation: "Pioneer 10 will take more than two million years to reach the vicinity of the red giant star Aldebaran."
+        explanation: "Apollo 14 and Apollo 15 also deployed laser retroreflectors. The Apollo 15 array is three times larger and is the most frequently targeted."
       }
     ],
     sources: [
-      { label: "NASA Science - Pioneer 10 Overview", url: "https://science.nasa.gov/mission/pioneer-10" },
-      { label: "NASA Features - 45 Years Ago: Pioneer 10", url: "https://www.nasa.gov/feature/45-years-ago-pioneer-10-first-to-explore-jupiter" }
+      { label: "NASA Science - Apollo Lunar Laser Ranging", url: "https://science.nasa.gov/solar-system/moon/laser-reflector/" },
+      { label: "Apollo Lunar Surface Journal - Apollo 11", url: "https://www.nasa.gov/history/alsj/a11/a11.html" }
     ],
     footnotes: [
-      "Last signal received Jan 23, 2003 UTC. Some local station logs recorded Jan 22 due to US local time difference.",
-      "The final signal required 11 hours and 20 minutes to cross the 12.23 billion kilometer expanse to Earth."
+      "Apollo 11, 14, and 15 retroreflectors, along with Soviet Lunokhod 1 and 2 reflectors, comprise the international Lunar Laser Ranging network.",
+      "Because the reflector is completely passive and has no electronics, it has no design expiration date and continues to operate indefinitely."
     ]
   },
+
+  // 8. Voyager 1 (Deep space, 1977 - PRESENT) - ACTIVE "STILL TALKING"
   {
     slug: "voyager-1",
     name: "Voyager 1",
@@ -861,7 +877,7 @@ export const MACHINES: Machine[] = [
         whyItMatters: "Changed humanity's philosophical perspective on our fragile oasis in the cosmic ocean."
       },
       {
-        idea: "Extreme Radio Communications at Millowatt Levels",
+        idea: "Extreme Radio Communications at Milliwatt Levels",
         result: "Transmits across 25+ billion kilometers on just 22 watts (less than a refrigerator light bulb), received by Earth's 70-meter dishes.",
         whyItMatters: "Developed ultra-deep-space error correction coding, low-noise maser amplifiers, and arrayed tracking antennas."
       }

@@ -93,3 +93,4 @@ We strictly utilized open government data repositories provided by NASA and affi
 * **Typography:** *Atkinson Hyperlegible* (developed by the Braille Institute of America to maximize character legibility for low-vision readers).
 * **Open Source Libraries:** Next.js, React, Tailwind CSS, Lucide React, Canvas-Confetti, Docker.
 * **Competition Disclaimer:** *Independent student project created for the NASA Space Apps Challenge 2026. Not affiliated with or endorsed by NASA.* Full citations and credit tables are permanently published on the live site at [/about](https://last-words1.vercel.app/about).
+

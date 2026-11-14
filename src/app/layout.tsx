@@ -1,8 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Atkinson_Hyperlegible, JetBrains_Mono } from "next/font/google";
+import { Fredoka, Space_Grotesk, Atkinson_Hyperlegible, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ModeProvider } from "@/context/ModeContext";
+import { SoundProvider } from "@/context/SoundContext";
+import { NarrationProvider } from "@/context/NarrationContext";
+import { StickerProvider } from "@/context/StickerContext";
+import ModeGate from "@/components/ModeGate";
+import StickerBookModal from "@/components/kids/StickerBookModal";
+
+const fredoka = Fredoka({
+  variable: "--font-fredoka",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -33,7 +46,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://last-words1.vercel.app"),
   title: "LAST WORDS | NASA Space Apps Challenge 2026",
-  description: "Every machine NASA left behind said something before it went quiet. An interactive storytelling journey across the Moon, Mars, and deep space.",
+  description: "Every machine NASA left behind said something before it went quiet. An interactive storytelling journey across the Moon, Mars, and deep space for all ages.",
   keywords: ["NASA", "Space Apps", "Surveyor 3", "Apollo ALSEP", "Opportunity", "InSight", "Ingenuity", "Pioneer 10", "Voyager 1"],
   authors: [{ name: "NASA Space Apps Challenge 2026 Team" }],
   openGraph: {
@@ -67,14 +80,25 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${atkinson.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      data-mode="kids"
+      className={`${fredoka.variable} ${spaceGrotesk.variable} ${atkinson.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col cosmic-background selection:bg-[var(--color-signal-amber)]/20 selection:text-[var(--color-signal-amber)]">
-        <Navbar />
-        <main id="main-content" className="flex-1 focus:outline-none">
-          {children}
-        </main>
-        <Footer />
+      <body className="min-h-full flex flex-col cosmic-background selection:bg-[#5BE3C0]/30 selection:text-white">
+        <ModeProvider>
+          <SoundProvider>
+            <NarrationProvider>
+              <StickerProvider>
+                <Navbar />
+                <main id="main-content" className="flex-1 focus:outline-none">
+                  {children}
+                </main>
+                <Footer />
+                <ModeGate />
+                <StickerBookModal />
+              </StickerProvider>
+            </NarrationProvider>
+          </SoundProvider>
+        </ModeProvider>
       </body>
     </html>
   );

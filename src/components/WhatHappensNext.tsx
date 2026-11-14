@@ -5,26 +5,46 @@ export default function WhatHappensNext() {
     {
       icon: ShieldCheck,
       badge: "PRESERVE",
-      title: "Lunar Historic Heritage Sites",
-      description: "Under the 'One Small Step to Protect Human Heritage in Space Act', NASA and international partners established protective buffer zones around Tranquility Base, Surveyor 3, and Apollo landing sites to prevent rocket exhaust from sandblasting human history.",
-      sourceLabel: "NASA Heritage Recommendations",
-      sourceUrl: "https://www.nasa.gov/news-release/nasa-releases-guidelines-for-lunar-artifacts/"
+      title: "Protecting heritage sites",
+      description: "In 2011 NASA published voluntary recommendations for protecting U.S. lunar artifacts such as the Apollo landing sites. A 2020 U.S. law, the One Small Step to Protect Human Heritage in Space Act, requires NASA's partners to follow them.",
+      links: [
+        {
+          label: "NASA Lunar Artifacts Recommendations (PDF)",
+          url: "https://www.nasa.gov/pdf/617743main_NASA-USG_LUNAR_HISTORIC_SITES_RevA-508.pdf"
+        },
+        {
+          label: "One Small Step Act (PLAW-116publ275)",
+          url: "https://www.govinfo.gov/content/pkg/PLAW-116publ275/html/PLAW-116publ275.htm"
+        }
+      ]
     },
     {
       icon: Recycle,
       badge: "RECYCLE",
       title: "NASA LunaRecycle Challenge",
-      description: "NASA's LunaRecycle Challenge awards millions in prizes to develop innovative manufacturing technologies that melt discarded descent stages, heat shields, and aluminum struts into lunar habitats and solar array structures.",
-      sourceLabel: "NASA LunaRecycle Prize",
-      sourceUrl: "https://www.nasa.gov/prizes-challenges-and-crowdsourcing/lunarecycle-challenge/"
+      description: "A $3 million NASA prize competition, run with the University of Alabama, asks teams to design ways to recycle solid waste on the Moon, such as food packaging, old clothing and even human waste, so less trash is left behind.",
+      links: [
+        {
+          label: "LunaRecycle Challenge Official Site",
+          url: "https://lunarecyclechallenge.ua.edu"
+        },
+        {
+          label: "NASA Centennial Challenges",
+          url: "https://www.nasa.gov/prizes-challenges-and-crowdsourcing/centennial-challenges/"
+        }
+      ]
     },
     {
       icon: Wrench,
       badge: "REUSE",
-      title: "PROMISE Lunar Rover from Rover Spares",
-      description: "Engineers are repurposing flight-qualified spare wheels, avionics, and sensors originally built for Mars exploration to construct PROMISE, an economical lunar surface explorer that proves old hardware never dies.",
-      sourceLabel: "NASA Hardware Repurposing",
-      sourceUrl: "https://science.nasa.gov"
+      title: "PROMISE, a Moon rover from Mars-rover parts",
+      description: "NASA plans a new rover called PROMISE, built from components and test vehicles that serve the Mars rovers Perseverance and Curiosity, to explore the Moon's south pole. It is planned for 2028.",
+      links: [
+        {
+          label: "JPL News - Moon Base Transportation Projects",
+          url: "https://www.jpl.nasa.gov/news/nasa-awards-moon-base-transportation-technology-science-projects/"
+        }
+      ]
     }
   ];
 
@@ -67,16 +87,19 @@ export default function WhatHappensNext() {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[var(--color-border)]">
-                <a
-                  href={item.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-mono text-[var(--color-signal-amber)] hover:underline inline-flex items-center"
-                >
-                  <span>{item.sourceLabel}</span>
-                  <ExternalLink className="w-3 h-3 ml-1" />
-                </a>
+              <div className="pt-4 border-t border-[var(--color-border)] space-y-2">
+                {item.links.map((link, lIdx) => (
+                  <a
+                    key={lIdx}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-mono text-[var(--color-signal-amber)] hover:underline flex items-center justify-between"
+                  >
+                    <span>{link.label}</span>
+                    <ExternalLink className="w-3 h-3 ml-1 shrink-0" />
+                  </a>
+                ))}
               </div>
             </div>
           );
@@ -85,4 +108,3 @@ export default function WhatHappensNext() {
     </section>
   );
 }
-

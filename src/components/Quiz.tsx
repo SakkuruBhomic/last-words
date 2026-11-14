@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { QuizQuestion } from "@/data/types";
-import { HelpCircle, CheckCircle2, XCircle, Award, RotateCcw } from "lucide-react";
+import { HelpCircle, CheckCircle2, AlertCircle, Award, RotateCcw, Sparkles } from "lucide-react";
 import confetti from "canvas-confetti";
 import { sound } from "@/lib/audio";
 
@@ -13,12 +13,13 @@ interface QuizProps {
 }
 
 export default function Quiz({ quiz, machineSlug, machineName }: QuizProps) {
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
-  const [submitted, setSubmitted] = useState(false);
+  // Map of question index -> selected option index
+  const [answers, setAnswers] = useState<Record<number, number>>({});
+  // Track wrong attempts per question for wiggle animation
+  const [wigglingQuestion, setWigglingQuestion] = useState<number | null>(null);
   const [isCompletedBefore, setIsCompletedBefore] = useState(false);
 
   useEffect(() => {
-    // Check localStorage for saved completed status
     try {
       const stored = localStorage.getItem(`quiz-completed-${machineSlug}`);
       if (stored === "true") {
@@ -30,53 +31,52 @@ export default function Quiz({ quiz, machineSlug, machineName }: QuizProps) {
   }, [machineSlug]);
 
   const handleSelectOption = (questionIndex: number, optionIndex: number) => {
-    if (submitted) return;
-    setSelectedAnswers((prev) => ({
+    const isCorrect = optionIndex === quiz[questionIndex].correctAnswer;
+
+    setAnswers((prev) => ({
       ...prev,
       [questionIndex]: optionIndex,
     }));
-    sound.playTelemetryBlip(750, 25);
-  };
 
-  const allAnswered = quiz.every((_, idx) => selectedAnswers[idx] !== undefined);
+    if (isCorrect) {
+      sound.playTelemetryBlip(980, 80);
+      // Check if all questions are now answered correctly
+      const updatedAnswers = { ...answers, [questionIndex]: optionIndex };
+      const allCorrect = quiz.every(
+        (q, idx) => updatedAnswers[idx] === q.correctAnswer
+      );
 
-  const handleSubmit = () => {
-    if (!allAnswered) return;
-    setSubmitted(true);
-
-    // Calculate score
-    const correctCount = quiz.filter(
-      (q, idx) => selectedAnswers[idx] === q.correctAnswer
-    ).length;
-
-    if (correctCount >= 2) {
-      sound.playTelemetryBlip(1050, 120);
-      try {
-        localStorage.setItem(`quiz-completed-${machineSlug}`, "true");
-        setIsCompletedBefore(true);
-
-        // Fire festive confetti
-        confetti({
-          particleCount: 50,
-          spread: 60,
-          origin: { y: 0.8 },
-          colors: ["#FFB020", "#3EE6C3", "#8E7CFF"],
-        });
-      } catch {
-        // storage disabled
+      if (allCorrect) {
+        sound.playTelemetryBlip(1200, 150);
+        try {
+          localStorage.setItem(`quiz-completed-${machineSlug}`, "true");
+          setIsCompletedBefore(true);
+          confetti({
+            particleCount: 50,
+            spread: 60,
+            origin: { y: 0.8 },
+            colors: ["#FFB020", "#3EE6C3", "#8E7CFF"],
+          });
+        } catch {
+          // storage error
+        }
       }
     } else {
-      sound.playTelemetryBlip(440, 120);
+      // Gentle incorrect feedback: trigger gentle wiggle, allow try again
+      sound.playTelemetryBlip(440, 60);
+      setWigglingQuestion(questionIndex);
+      setTimeout(() => setWigglingQuestion(null), 600);
     }
   };
 
   const handleReset = () => {
-    setSelectedAnswers({});
-    setSubmitted(false);
-    sound.playTelemetryBlip(600, 30);
+    setAnswers({});
+    sound.playTelemetryBlip(600, 40);
   };
 
-  const score = quiz.filter((q, idx) => selectedAnswers[idx] === q.correctAnswer).length;
+  const correctCount = quiz.filter(
+    (q, idx) => answers[idx] === q.correctAnswer
+  ).length;
 
   return (
     <section className="my-14 p-6 sm:p-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-xl">
@@ -84,140 +84,137 @@ export default function Quiz({ quiz, machineSlug, machineName }: QuizProps) {
         <div>
           <div className="flex items-center space-x-2 text-xs font-mono text-[var(--color-signal-amber)] mb-1">
             <HelpCircle className="w-4 h-4" />
-            <span>KNOWLEDGE CHECK</span>
+            <span>KNOWLEDGE CHECK // INSTANT FEEDBACK</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--color-text)]">
             Mission Debrief Quiz
           </h2>
           <p className="text-sm text-[var(--color-muted)] mt-1">
-            Test your understanding of {machineName}'s scientific discoveries and mission history.
+            Test your understanding of {machineName}&apos;s scientific discoveries. Tap an answer for instant feedback.
           </p>
         </div>
 
-        {isCompletedBefore && (
-          <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-[var(--color-alive-cyan)]/15 border border-[var(--color-alive-cyan)]/30 text-[var(--color-alive-cyan)] text-xs font-mono font-bold self-start sm:self-auto">
-            <Award className="w-4 h-4" />
-            <span>MISSION ACCREDITED</span>
-          </div>
+        <div className="flex items-center space-x-3">
+          {isCompletedBefore && (
+            <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-[var(--color-alive-cyan)]/15 border border-[var(--color-alive-cyan)]/30 text-[var(--color-alive-cyan)] text-xs font-mono font-bold">
+              <Award className="w-4 h-4" />
+              <span>MISSION ACCREDITED</span>
+            </div>
+          )}
+
+          {Object.keys(answers).length > 0 && (
+            <button
+              onClick={handleReset}
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-border)] text-xs font-mono text-[var(--color-muted)] hover:text-white transition-colors"
+              title="Reset quiz"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Retry</span>
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Progress pill */}
+      <div className="flex items-center justify-between text-xs font-mono text-[var(--color-muted)] mb-6">
+        <span>Correct: {correctCount} of {quiz.length}</span>
+        {correctCount === quiz.length && (
+          <span className="text-[var(--color-alive-cyan)] font-bold flex items-center gap-1">
+            <Sparkles className="w-3.5 h-3.5" /> All questions completed!
+          </span>
         )}
       </div>
 
-      {/* 3 Questions */}
       <div className="space-y-8">
-        {quiz.map((item, qIdx) => {
-          const userChoice = selectedAnswers[qIdx];
-          const isCorrect = userChoice === item.correctAnswer;
+        {quiz.map((q, qIdx) => {
+          const selected = answers[qIdx];
+          const hasAnswered = selected !== undefined;
+          const isCorrect = hasAnswered && selected === q.correctAnswer;
+          const isWrong = hasAnswered && !isCorrect;
+          const isWiggling = wigglingQuestion === qIdx;
 
           return (
-            <div key={qIdx} className="space-y-3">
-              <h3 className="font-display font-bold text-base sm:text-lg text-white">
-                <span className="font-mono text-xs text-[var(--color-signal-amber)] mr-2 font-normal">
-                  Q{qIdx + 1}.
+            <div
+              key={qIdx}
+              className={`p-5 rounded-xl border transition-all ${
+                isWiggling ? "animate-wiggle border-red-500/40" : "border-white/5 bg-white/[0.02]"
+              }`}
+            >
+              <h3 className="font-display font-semibold text-base sm:text-lg text-[var(--color-text)] mb-4 flex items-start gap-2">
+                <span className="text-[var(--color-signal-amber)] font-mono text-sm">
+                  0{qIdx + 1}.
                 </span>
-                {item.q}
+                <span>{q.q}</span>
               </h3>
 
-              <div className="grid grid-cols-1 gap-2.5" role="radiogroup" aria-label={`Question ${qIdx + 1}`}>
-                {item.options.map((option, optIdx) => {
-                  const isSelected = userChoice === optIdx;
-                  let optionStyle = "border-[var(--color-border)] bg-[var(--color-surface-elevated)] text-[var(--color-text)] hover:border-white/30";
+              <div className="grid grid-cols-1 gap-2.5">
+                {q.options.map((option, oIdx) => {
+                  const isThisSelected = selected === oIdx;
+                  const isThisCorrect = oIdx === q.correctAnswer;
 
-                  if (submitted) {
-                    if (optIdx === item.correctAnswer) {
-                      optionStyle = "border-emerald-500 bg-emerald-950/40 text-emerald-200 font-medium";
-                    } else if (isSelected && !isCorrect) {
-                      optionStyle = "border-rose-500 bg-rose-950/40 text-rose-200";
-                    } else {
-                      optionStyle = "border-[var(--color-border)] opacity-50 text-[var(--color-muted)]";
+                  let buttonStyle = "border-[var(--color-border)] bg-[var(--color-surface-elevated)]/60 text-gray-300 hover:border-[var(--color-signal-amber)]/50";
+
+                  if (hasAnswered) {
+                    if (isThisSelected && isThisCorrect) {
+                      buttonStyle = "border-[var(--color-alive-cyan)] bg-[var(--color-alive-cyan)]/20 text-white font-medium ring-1 ring-[var(--color-alive-cyan)]";
+                    } else if (isThisSelected && !isThisCorrect) {
+                      buttonStyle = "border-red-500/50 bg-red-500/10 text-red-200";
+                    } else if (isCorrect && isThisCorrect) {
+                      buttonStyle = "border-[var(--color-alive-cyan)]/40 bg-[var(--color-alive-cyan)]/10 text-gray-200";
                     }
-                  } else if (isSelected) {
-                    optionStyle = "border-[var(--color-signal-amber)] bg-[var(--color-signal-amber)]/10 text-white font-medium";
                   }
 
                   return (
                     <button
-                      key={optIdx}
+                      key={oIdx}
                       type="button"
-                      onClick={() => handleSelectOption(qIdx, optIdx)}
-                      disabled={submitted}
-                      className={`p-3.5 rounded-xl border text-left text-sm transition-all flex items-start justify-between ${optionStyle}`}
-                      role="radio"
-                      aria-checked={isSelected}
+                      onClick={() => handleSelectOption(qIdx, oIdx)}
+                      className={`text-left p-3.5 rounded-xl border transition-all text-sm flex items-center justify-between cursor-pointer ${buttonStyle}`}
                     >
-                      <span className="flex-1 pr-2">{option}</span>
-                      {submitted && optIdx === item.correctAnswer && (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                      )}
-                      {submitted && isSelected && !isCorrect && (
-                        <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                      <div className="flex items-center space-x-3">
+                        <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono border border-white/20 shrink-0">
+                          {String.fromCharCode(65 + oIdx)}
+                        </span>
+                        <span>{option}</span>
+                      </div>
+
+                      {hasAnswered && isThisSelected && (
+                        <div className="ml-2 shrink-0">
+                          {isThisCorrect ? (
+                            <CheckCircle2 className="w-5 h-5 text-[var(--color-alive-cyan)]" />
+                          ) : (
+                            <AlertCircle className="w-5 h-5 text-red-400" />
+                          )}
+                        </div>
                       )}
                     </button>
                   );
                 })}
               </div>
 
-              {/* Instant explanation feedback */}
-              {submitted && (
-                <div
-                  className={`p-3.5 rounded-lg text-xs leading-relaxed mt-2 border ${
-                    isCorrect
-                      ? "bg-emerald-950/30 border-emerald-500/30 text-emerald-200"
-                      : "bg-amber-950/30 border-amber-500/30 text-amber-200"
-                  }`}
-                >
-                  <strong>{isCorrect ? "Correct!" : "Scientific context:"}</strong> {item.explanation}
+              {/* Instant feedback message & explanation */}
+              {hasAnswered && (
+                <div className="mt-4 pt-3 border-t border-white/10">
+                  {isCorrect ? (
+                    <div className="text-xs text-[var(--color-alive-cyan)] flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-bold">Correct! </span>
+                        <span className="text-gray-300">{q.explanation}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-xs text-amber-300/90 flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>Not quite. Give it another try!</span>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           );
         })}
       </div>
-
-      {/* Action Footer */}
-      <div className="mt-8 pt-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          {submitted ? (
-            <div className="font-mono text-sm">
-              Debrief Result:{" "}
-              <strong className={score >= 2 ? "text-emerald-400" : "text-amber-400"}>
-                {score} / {quiz.length} Correct
-              </strong>
-              {score === 3 && " — Flawless mission mastery!"}
-            </div>
-          ) : (
-            <span className="text-xs text-[var(--color-muted)] font-mono">
-              Answer all 3 questions to record your score.
-            </span>
-          )}
-        </div>
-
-        <div className="flex items-center space-x-3">
-          {submitted ? (
-            <button
-              onClick={handleReset}
-              type="button"
-              className="inline-flex items-center space-x-2 px-4 py-2 rounded-lg border border-[var(--color-border)] text-xs font-mono text-[var(--color-muted)] hover:text-white hover:border-white/40 transition-colors"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Retry Quiz</span>
-            </button>
-          ) : (
-            <button
-              onClick={handleSubmit}
-              disabled={!allAnswered}
-              type="button"
-              className={`px-5 py-2.5 rounded-lg text-xs font-mono font-bold transition-all ${
-                allAnswered
-                  ? "bg-[var(--color-signal-amber)] text-black hover:opacity-90 shadow-lg cursor-pointer"
-                  : "bg-white/10 text-white/40 cursor-not-allowed"
-              }`}
-            >
-              Submit Debrief Answers
-            </button>
-          )}
-        </div>
-      </div>
     </section>
   );
 }
-

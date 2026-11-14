@@ -1,14 +1,14 @@
-import { DollarSign, Repeat, Footprints, HelpCircle } from "lucide-react";
+import { Rocket, Repeat, Footprints, HelpCircle } from "lucide-react";
 import GlossaryTooltip from "@/components/GlossaryTooltip";
 
 export default function WhyStillThere() {
   const cards = [
     {
-      icon: DollarSign,
-      title: "The Rocket Equation & Return Costs",
+      icon: Rocket,
+      title: "The Rocket Equation & Return Trips",
       content: (
         <span>
-          Every kilogram launched off Earth requires tens of kilograms of propellant. Launching a return rocket capable of lifting off Mars or the Moon would double or triple mission costs. Most probes are one-way scientific scouts designed to give their all on the surface.
+          Rockets burn most of their fuel just lifting fuel. A return trip would need extra rockets, so most robots are built for one-way trips to give their all exploring distant worlds.
         </span>
       ),
     },
@@ -17,7 +17,7 @@ export default function WhyStillThere() {
       title: "Left On Purpose to Keep Working",
       content: (
         <span>
-          Not all hardware is abandoned junk. Stations like the Apollo 11 <GlossaryTooltip termKey="retroreflector">laser retroreflector</GlossaryTooltip> and Apollo ALSEP packages were deliberately positioned to provide decades of continuous observations, functioning with zero humans required on site.
+          Not all hardware is abandoned junk. Stations like the Apollo 17 ALSEP package operated for years until Mission Control sent a shutdown command in 1977, and Apollo <GlossaryTooltip termKey="retroreflector">laser retroreflectors</GlossaryTooltip> still bounce laser signals back to Earth today.
         </span>
       ),
     },
@@ -26,7 +26,7 @@ export default function WhyStillThere() {
       title: "Sometimes Humans Walk Back",
       content: (
         <span>
-          In November 1969, Apollo 12 proved pinpoint landing accuracy by setting down 180 meters from Surveyor 3. Conrad and Bean walked up to the silent craft, cut off its camera and scoop, and brought them home to study how space ages metal.
+          In November 1969, Apollo 12 proved pinpoint landing accuracy by setting down ~180 meters from Surveyor 3. Conrad and Bean walked up to the silent craft, removed its camera and scoop, and brought them home to study how space ages materials.
         </span>
       ),
     },
@@ -36,13 +36,13 @@ export default function WhyStillThere() {
     <section className="my-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center space-x-2 text-xs font-mono text-[var(--color-signal-amber)] mb-2">
         <HelpCircle className="w-4 h-4" />
-        <span>PLANETARY ECONOMICS & HISTORY</span>
+        <span>Big questions</span>
       </div>
       <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--color-text)] mb-3">
         Why Is It Still There?
       </h2>
       <p className="text-base text-[var(--color-muted)] max-w-2xl mb-10 leading-relaxed">
-        Why doesn&apos;t NASA pack up its robots and fly them home? Here are the three reasons why human technology rests across the solar system.
+        Why doesn&apos;t NASA pack up its robots and fly them home? Here are three reasons why human technology rests across the solar system.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -65,8 +65,8 @@ export default function WhyStillThere() {
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[var(--color-border)] text-xs font-mono text-[var(--color-muted)]">
-                CASE STUDY // REASON #{idx + 1}
+              <div className="mt-6 pt-4 border-t border-[var(--color-border)] text-xs text-[var(--color-muted)]">
+                NASA History & Physics
               </div>
             </div>
           );

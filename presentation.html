@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAST WORDS — Complete Tech Stack & Architectural Presentation</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-display: 'Space Grotesk', -apple-system, sans-serif;
+      --font-body: 'Atkinson Hyperlegible', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --color-bg: #070A11;
+      --color-surface: #0E1320;
+      --color-surface-elevated: #161C2E;
+      --color-border: #1E2638;
+      --color-amber: #F59E0B;
+      --color-cyan: #38BDF8;
+      --color-mars: #EF4444;
+      --color-moon: #E2E8F0;
+      --color-green: #22C55E;
+    }
+    body {
+      background-color: var(--color-bg);
+      color: #F3F4F6;
+      font-family: var(--font-body);
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+    .font-display { font-family: var(--font-display); }
+    .font-mono { font-family: var(--font-mono); }
+    .font-body { font-family: var(--font-body); }
+    
+    .slide {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+    }
+    /* Starfield background */
+    .starfield {
+      background-image: 
+        radial-gradient(1px 1px at 25px 35px, #ffffff 100%, transparent),
+        radial-gradient(1px 1px at 80px 120px, #ffffff99 100%, transparent),
+        radial-gradient(1.5px 1.5px at 150px 70px, #38bdf888 100%, transparent),
+        radial-gradient(1px 1px at 220px 200px, #f59e0b88 100%, transparent),
+        radial-gradient(1px 1px at 310px 140px, #ffffff66 100%, transparent);
+      background-size: 350px 350px;
+    }
+    .card-border-glow:hover {
+      border-color: rgba(245, 158, 11, 0.5);
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.15);
+    }
+  </style>
+</head>
+<body class="h-screen w-screen flex flex-col justify-between starfield">
+
+  <!-- Top Control Bar -->
+  <header class="h-14 border-b border-[var(--color-border)] px-6 flex items-center justify-between bg-[var(--color-surface)]/80 backdrop-blur z-20">
+    <div class="flex items-center space-x-3">
+      <div class="w-3 h-3 rounded-full bg-[var(--color-amber)] animate-pulse"></div>
+      <span class="font-mono text-xs font-bold tracking-wider text-[var(--color-amber)]">LAST WORDS // ARCHITECTURE & TECH STACK SLIDE DECK</span>
+      <span class="text-xs px-2 py-0.5 rounded bg-white/10 text-gray-300 font-mono">NASA Space Apps 2026</span>
+    </div>
+    <div class="flex items-center space-x-4">
+      <span class="text-xs font-mono text-gray-400" id="slide-indicator">Slide 1 / 23</span>
+      <button onclick="toggleNotes()" class="px-2.5 py-1 text-xs font-mono rounded border border-[var(--color-border)] hover:border-[var(--color-amber)] text-gray-300 hover:text-white transition cursor-pointer" title="Press 'S' to toggle speaker notes">
+        📝 Speaker Notes [S]
+      </button>
+      <button onclick="toggleOverview()" class="px-2.5 py-1 text-xs font-mono rounded border border-[var(--color-border)] hover:border-[var(--color-cyan)] text-gray-300 hover:text-white transition cursor-pointer" title="Press 'O' for slide overview">
+        📑 Overview [O]
+      </button>
+      <button onclick="toggleFullScreen()" class="px-2.5 py-1 text-xs font-mono rounded border border-[var(--color-border)] hover:border-white text-gray-300 hover:text-white transition cursor-pointer" title="Press 'F' for full screen">
+        ⛶ Fullscreen [F]
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Slide Viewport -->
+  <main class="flex-1 relative overflow-hidden flex items-center justify-center p-6 md:p-12">
+
+    <!-- SLIDE 1: Title -->
+    <section class="slide active w-full max-w-6xl flex flex-col justify-center items-center text-center space-y-6">
+      <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[var(--color-amber)]/40 bg-[var(--color-amber)]/10 text-xs font-mono text-[var(--color-amber)]">
+        <span>🛰️ NASA SPACE APPS CHALLENGE 2026 // TECHNICAL ARCHITECTURE</span>
+      </div>
+      <h1 class="font-display font-extrabold text-5xl md:text-7xl text-white tracking-tight">
+        LAST WORDS
+      </h1>
+      <p class="font-body text-xl md:text-2xl text-[var(--color-cyan)] max-w-3xl leading-relaxed">
+        Complete Tech Stack, System Architecture &amp; Page-by-Page Feature Deep Dive
+      </p>
+      <p class="font-body text-sm md:text-base text-gray-400 max-w-2xl italic">
+        "Every machine NASA left behind said something before it went quiet."
+      </p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl mt-6">
+        <div class="p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
+          <span class="block text-xs font-mono text-[var(--color-amber)] mb-1">FRAMEWORK</span>
+          <span class="text-sm font-bold text-white">Next.js 16 + React 19</span>
+        </div>
+        <div class="p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
+          <span class="block text-xs font-mono text-[var(--color-cyan)] mb-1">STYLING</span>
+          <span class="text-sm font-bold text-white">Tailwind CSS v4</span>
+        </div>
+        <div class="p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
+          <span class="block text-xs font-mono text-[var(--color-green)] mb-1">ARCHITECTURE</span>
+          <span class="text-sm font-bold text-white">Zero-DB Static (SSG)</span>
+        </div>
+        <div class="p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
+          <span class="block text-xs font-mono text-[var(--color-mars)] mb-1">ACCESSIBILITY</span>
+          <span class="text-sm font-bold text-white">WCAG 2.2 AA Compliant</span>
+        </div>
+      </div>
+
+      <div class="text-xs font-mono text-gray-500 pt-4 flex space-x-6">
+        <span>Live: <a href="https://last-words1.vercel.app/" target="_blank" class="text-gray-300 underline">last-words1.vercel.app</a></span>
+        <span>•</span>
+        <span>GitHub: <a href="https://github.com/SakkuruBhomic/last-words" target="_blank" class="text-gray-300 underline">SakkuruBhomic/last-words</a></span>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Project Vision -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-amber)] uppercase tracking-wider">01 // EXECUTIVE SUMMARY</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Project Vision &amp; The NASA Challenge</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] flex flex-col justify-between">
+          <div>
+            <h3 class="font-display font-bold text-xl text-[var(--color-amber)] mb-3">The Challenge Prompt</h3>
+            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+              <strong>"Abandoned but not Forgotten: Storytelling about NASA's Discarded Equipment on the Moon and Mars."</strong>
+            </p>
+            <ul class="space-y-3 text-xs md:text-sm text-gray-400">
+              <li>• <strong class="text-white">Target Audience:</strong> Students grades 5–10 (ages 10–16), science educators, and the public.</li>
+              <li>• <strong class="text-white">Scope:</strong> 8 iconic missions across Moon, Mars, and interstellar deep space.</li>
+              <li>• <strong class="text-white">The Living Paradox:</strong> Two craft are still answering: Voyager 1 is actively transmitting from interstellar space, and the Apollo 11 laser retroreflector still reflects Earth lasers with 0 electricity.</li>
+            </ul>
+          </div>
+          <div class="mt-4 pt-4 border-t border-[var(--color-border)] text-xs font-mono text-[var(--color-amber)]">
+            PHILOSOPHY: Accuracy beats drama. Real telemetry over fantasy.
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] flex flex-col justify-between">
+          <div>
+            <h3 class="font-display font-bold text-xl text-[var(--color-cyan)] mb-3">Core Engineering Goals</h3>
+            <ul class="space-y-3 text-xs md:text-sm text-gray-300">
+              <li><strong class="text-white">1. Zero-Database SSG:</strong> Blazing-fast page loads on school Chromebooks and weak networks with 0ms database lag.</li>
+              <li><strong class="text-white">2. Synthetic Audio Engine:</strong> Procedural Web Audio oscillators generating telemetry blips without bundling bulky MP3 assets.</li>
+              <li><strong class="text-white">3. Hyper-Accessible UI:</strong> Atkinson Hyperlegible typography (Braille Institute), keyboard-driven sliders, screen-reader safe typewriter logs.</li>
+              <li><strong class="text-white">4. Turnkey Classroom Tools:</strong> 20-minute lesson plan, guided debate prompts, and print-optimized student worksheets.</li>
+            </ul>
+          </div>
+          <div class="mt-4 pt-4 border-t border-[var(--color-border)] text-xs font-mono text-[var(--color-cyan)]">
+            PERFORMANCE: 100/100 Lighthouse SEO &amp; Best Practices.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Tech Stack Matrix -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-cyan)] uppercase tracking-wider">02 // SYSTEM ARCHITECTURE</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">The Production Tech Stack Matrix</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+        <!-- Col 1 -->
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-cyan)] font-bold">CORE RUNTIME &amp; FRAMEWORK</div>
+          <h3 class="font-display font-bold text-lg text-white">Next.js 16 + React 19</h3>
+          <ul class="space-y-2 text-xs text-gray-300 font-mono">
+            <li><span class="text-[var(--color-cyan)]">Framework:</span> Next.js 16.4.6 (App Router)</li>
+            <li><span class="text-[var(--color-cyan)]">Library:</span> React 19.3.0 (RSC by default)</li>
+            <li><span class="text-[var(--color-cyan)]">Language:</span> TypeScript 5 (Strict Mode)</li>
+            <li><span class="text-[var(--color-cyan)]">Bundler:</span> Turbopack compilation</li>
+            <li><span class="text-[var(--color-cyan)]">Pre-rendering:</span> Static Site Generation</li>
+          </ul>
+          <p class="text-xs text-gray-400 border-t border-[var(--color-border)] pt-3 leading-relaxed">
+            Eliminates client bundle bloat with Server Components while generating static HTML for every route.
+          </p>
+        </div>
+
+        <!-- Col 2 -->
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">STYLING &amp; INTERACTIVITY</div>
+          <h3 class="font-display font-bold text-lg text-white">Tailwind v4 + Framer Motion</h3>
+          <ul class="space-y-2 text-xs text-gray-300 font-mono">
+            <li><span class="text-[var(--color-amber)]">CSS Engine:</span> Tailwind CSS 4.3.3</li>
+            <li><span class="text-[var(--color-amber)]">Motion:</span> Framer Motion 14.14</li>
+            <li><span class="text-[var(--color-amber)]">Icons:</span> Lucide React</li>
+            <li><span class="text-[var(--color-amber)]">Confetti:</span> Canvas-Confetti</li>
+            <li><span class="text-[var(--color-amber)]">Tokens:</span> Custom Mission Control Palettes</li>
+          </ul>
+          <p class="text-xs text-gray-400 border-t border-[var(--color-border)] pt-3 leading-relaxed">
+            Turbopack Tailwind integration with zero CSS layout shifts and hardware-accelerated animations.
+          </p>
+        </div>
+
+        <!-- Col 3 -->
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-green)] font-bold">INFRASTRUCTURE &amp; CI</div>
+          <h3 class="font-display font-bold text-lg text-white">Web Audio + Docker + Vercel</h3>
+          <ul class="space-y-2 text-xs text-gray-300 font-mono">
+            <li><span class="text-[var(--color-green)]">Audio:</span> Native Web Audio API</li>
+            <li><span class="text-[var(--color-green)]">Validation:</span> scripts/validate-data.mjs</li>
+            <li><span class="text-[var(--color-green)]">Deploy:</span> Vercel Global Edge CDN</li>
+            <li><span class="text-[var(--color-green)]">Container:</span> Multi-stage Dockerfile</li>
+            <li><span class="text-[var(--color-green)]">SEO:</span> Edge dynamic OpenGraph</li>
+          </ul>
+          <p class="text-xs text-gray-400 border-t border-[var(--color-border)] pt-3 leading-relaxed">
+            Zero external database dependencies; fully deployable to air-gapped science museums or modern cloud CDNs.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Zero-DB Architecture -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-amber)] uppercase tracking-wider">03 // ARCHITECTURE DEEP-DIVE</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Why Zero-Database &amp; Static Generation (SSG)?</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <h3 class="font-display font-bold text-xl text-[var(--color-amber)]">The Architectural Philosophy</h3>
+          <ul class="space-y-3 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Historical Telemetry is Immutable:</strong> Surveyor 3 landed in 1967; Opportunity's final signal was in 2018. Historical telemetry data does not mutate based on dynamic user queries.</li>
+            <li>• <strong class="text-white">0ms Database Latency:</strong> Traditional client-server DB requests add 100–400ms latency and connection pool failures. SSG delivers pre-rendered HTML in under 30ms.</li>
+            <li>• <strong class="text-white">Zero Infrastructure Cost:</strong> No cloud database hosting bills, no cold starts, no connection leak bugs, and immune to DDoS query exhaustion.</li>
+            <li>• <strong class="text-white">Air-Gapped Ready:</strong> Perfect for museum exhibits, planetarium kiosks, and classroom labs with restricted external internet access.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <h3 class="font-display font-bold text-xl text-[var(--color-cyan)]">The Next.js 16 Static Pipeline</h3>
+          <ul class="space-y-3 text-xs md:text-sm text-gray-300 font-mono">
+            <li><span class="text-white">1. src/data/machines.ts:</span> Single source of truth containing typed mission telemetry and coordinates.</li>
+            <li><span class="text-white">2. generateStaticParams():</span> App Router walks all 8 machine slugs at build time to output static HTML.</li>
+            <li><span class="text-white">3. generateMetadata():</span> Derives SEO titles, meta tags, and OpenGraph descriptors statically per mission.</li>
+            <li><span class="text-white">4. prebuild Hook:</span> Automatically runs validate-data.mjs to ensure strict schema compliance before any build artifact is emitted.</li>
+          </ul>
+          <div class="p-3 rounded-lg bg-[var(--color-surface-elevated)] border border-[var(--color-border)] text-xs text-gray-400">
+            Result: 100% deterministic, type-safe builds with instantaneous edge CDN propagation.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Typography & Accessibility -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-cyan)] uppercase tracking-wider">04 // ACCESSIBILITY &amp; DESIGN SYSTEM</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Typography Triad &amp; WCAG 2.2 AA Compliance</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <h3 class="font-display font-bold text-xl text-[var(--color-cyan)]">The Specialized Font Triad</h3>
+          <div class="space-y-3 text-xs md:text-sm">
+            <div class="p-3 rounded-xl border border-white/10 bg-[var(--color-surface-elevated)]">
+              <span class="font-display text-base font-bold text-white block">Space Grotesk (Headings)</span>
+              <span class="text-xs text-gray-400">Geometric, bold display font establishing the scale and scientific grandeur of space.</span>
+            </div>
+            <div class="p-3 rounded-xl border border-white/10 bg-[var(--color-surface-elevated)]">
+              <span class="font-body text-base font-bold text-[var(--color-amber)] block">Atkinson Hyperlegible (Body)</span>
+              <span class="text-xs text-gray-400">Created by the Braille Institute of America. Maximizes letterform distinction to assist readers with low vision and dyslexia.</span>
+            </div>
+            <div class="p-3 rounded-xl border border-white/10 bg-[var(--color-surface-elevated)]">
+              <span class="font-mono text-base font-bold text-[var(--color-green)] block">JetBrains Mono (Telemetry)</span>
+              <span class="text-xs text-gray-400">High-legibility monospace typeface for timestamps, coordinates, and terminal flight logs.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <h3 class="font-display font-bold text-xl text-[var(--color-amber)]">WCAG 2.2 AA Engineering</h3>
+          <ul class="space-y-3 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">High Contrast Ratios:</strong> Complies with AAA/AA contrast criteria (> 4.5:1 body, > 3:1 display) over dark space surfaces.</li>
+            <li>• <strong class="text-white">prefers-reduced-motion:</strong> All starfield CSS animations, SVG sine waves, and typewriter effects disable or switch to static representations automatically.</li>
+            <li>• <strong class="text-white">100% Keyboard Navigable:</strong> Interactive timeline cards, debrief quizzes, audio toggles, and then-and-now sliders support full Tab and Arrow key traversal.</li>
+            <li>• <strong class="text-white">Screen Reader Optimization:</strong> Hidden DOM text and selective ARIA live region management prevent vocal clutter.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Homepage -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-amber)] uppercase tracking-wider">05 // PAGE 1: HOMEPAGE (/)</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Homepage: Radar, Oscilloscope &amp; Listener Badge</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">COMPONENT: OscilloscopeHero.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">Atmospheric Hook &amp; Live Carrier Wave</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Emotional Hook:</strong> "Every machine NASA left behind said something before it went quiet."</li>
+            <li>• <strong class="text-white">Animated Carrier Waveform:</strong> Procedural SVG wave simulating real-time radio carrier signals from deep space observatories.</li>
+            <li>• <strong class="text-white">Audio Status Integration:</strong> Visual pill indicating whether client synthesizer audio is active or muted.</li>
+            <li>• <strong class="text-white">Hardware Acceleration:</strong> Pure CSS transforms and SVG path animations render smoothly at 60 FPS on low-power mobile GPUs.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-green)] font-bold">COMPONENT: ListenerBadge.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">Student Gamification &amp; LocalStorage</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Persistent Student Progress:</strong> Tracks completed mission quizzes via browser localStorage ('last-words-quiz-progress').</li>
+            <li>• <strong class="text-white">Tiered Recognition:</strong> Novice Observer (0 craft) &rarr; Orbital Scout (1-3) &rarr; Deep Space Listener (all craft).</li>
+            <li>• <strong class="text-white">Gold Badge Celebration:</strong> Unlocking all 8 craft triggers a canvas-confetti burst and permanently pins the gold mission patch.</li>
+            <li>• <strong class="text-white">Hydration-Safe Architecture:</strong> Evaluates client state via useMounted to eliminate React server/client count mismatch warnings.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: The Silence Timeline -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-cyan)] uppercase tracking-wider">06 // FEATURE DEEP-DIVE</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">The Silence Timeline (1967 – Now)</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-cyan)] font-bold">CHRONOLOGICAL &amp; RESPONSIVE ARCHITECTURE</div>
+          <h3 class="font-display font-bold text-xl text-white">Horizontal (Desktop) &rarr; Vertical (Mobile)</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Horizontal Track:</strong> Desktop view displays a smooth-scrolling timeline bar spanning 1967 to present day.</li>
+            <li>• <strong class="text-white">Vertical Stack:</strong> Automatically transforms on mobile viewports into a chronological vertical feed with milestone markers.</li>
+            <li>• <strong class="text-white">Destination Color Chips:</strong> Instant filter buttons for Moon (Silver), Mars (Rust), and Deep Space (Violet).</li>
+            <li>• <strong class="text-white">Pulsing Radar Rings:</strong> Highlights active transmitters (Voyager 1, Apollo 11) with radiant rings vs. silent probes.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">COMPONENT: src/components/SilenceTimeline.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">State Management &amp; Micro-Interactions</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Framer Motion Transitions:</strong> Filtering destinations animates cards smoothly with layout reordering.</li>
+            <li>• <strong class="text-white">Landing Coordinates:</strong> Cards surface exact landing coordinates (Ocean of Storms, Meridiani Planum, Jezero Crater).</li>
+            <li>• <strong class="text-white">Telemetry Timestamps:</strong> Displays exact launch and final transmission dates.</li>
+            <li>• <strong class="text-white">Keyboard Navigation:</strong> Cards are fully reachable and selectable using standard Tab keys.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Voyager 1 Light-Day -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-cyan)] uppercase tracking-wider">07 // FEATURE DEEP-DIVE</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Voyager 1: The One Light-Day Threshold</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <h3 class="font-display font-bold text-xl text-[var(--color-cyan)]">The Historic Milestone: Nov 18, 2026</h3>
+          <p class="text-xs md:text-sm text-gray-300 leading-relaxed">
+            On <strong>November 18, 2026 at 10:16:07 UTC</strong>, NASA's Voyager 1 spacecraft reaches a monumental milestone: exactly <strong>one light-day (24 light-hours)</strong> from Earth.
+          </p>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-400">
+            <li>• <strong class="text-white">Distance:</strong> Over 25.9 billion kilometers (173.1 Astronomical Units).</li>
+            <li>• <strong class="text-white">Relativistic Delay:</strong> A radio signal traveling at 299,792 km/s takes 24 hours just to make a one-way trip to the probe.</li>
+            <li>• <strong class="text-white">Significance:</strong> Demonstrates that NASA's 'abandoned' explorers continue making active astrophysical history.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">COMPONENT: VoyagerLightDay.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">Real-Time Relativistic Ticker Engine</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Precision Countdown:</strong> 1000ms client interval continuously updating Days, Hours, Minutes, and Seconds.</li>
+            <li>• <strong class="text-white">Dynamic One-Way Light Delay:</strong> Computes the exact real-time communication lag from Earth observatories.</li>
+            <li>• <strong class="text-white">Hydration-Safe:</strong> Mount-guarded so SSR and client clocks synchronize seamlessly.</li>
+            <li>• <strong class="text-white">Post-Threshold State:</strong> Gracefully transitions into a celebratory milestone message after the threshold timestamp passes.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Built for X, Lasted Y -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-amber)] uppercase tracking-wider">08 // FEATURE DEEP-DIVE</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Built for X, Lasted Y: Hand-Built SVG Bars</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">COMPONENT: BuiltForLastedBar.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">Visualizing NASA Engineering Resilience</h3>
+          <p class="text-xs md:text-sm text-gray-300 leading-relaxed">
+            NASA machines were engineered to survive radiation, extreme thermal cycling, and violent Martian dust storms. Many lasted orders of magnitude beyond their warranties.
+          </p>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-400">
+            <li>• <strong class="text-white">Proportional SVG Bars:</strong> Custom SVG bars graphing design specs against actual operational survival.</li>
+            <li>• <strong class="text-white">Non-Linear Scaler:</strong> Intelligent ratio calculation ensures designed bars remain visible even when actual lifespan exceeds 5700%.</li>
+            <li>• <strong class="text-white">Pedagogical Value:</strong> Sparks discussions on engineering safety factors and margin planning.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-3">
+          <h3 class="font-display font-bold text-lg text-[var(--color-green)]">Notable Survival Records</h3>
+          <div class="p-2.5 rounded-lg border border-white/10 bg-[var(--color-surface-elevated)] text-xs">
+            <span class="text-[var(--color-amber)] font-bold">Opportunity:</span> Designed for 90 Sols &rarr; Lasted 5,111 Sols (57x lifespan, 45.16 km driven)
+          </div>
+          <div class="p-2.5 rounded-lg border border-white/10 bg-[var(--color-surface-elevated)] text-xs">
+            <span class="text-[var(--color-amber)] font-bold">Ingenuity:</span> Designed for 5 Tech Demo Flights &rarr; Completed 72 Flights across 3 years
+          </div>
+          <div class="p-2.5 rounded-lg border border-white/10 bg-[var(--color-surface-elevated)] text-xs">
+            <span class="text-[var(--color-amber)] font-bold">Pioneer 10:</span> Designed for 21 Months &rarr; Survived 31 Years in deep space
+          </div>
+          <div class="p-2.5 rounded-lg border border-white/10 bg-[var(--color-surface-elevated)] text-xs">
+            <span class="text-[var(--color-amber)] font-bold">Apollo 11 Retroreflector:</span> Designed for 10 Years &rarr; Active for 57+ Years with zero electricity
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Why Still There & What Happens Next -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-mars)] uppercase tracking-wider">09 // EDITORIAL FEATURES</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Why Still There? &amp; What Happens Next?</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-mars)] font-bold">COMPONENT: WhyStillThere.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">Why Don't We Bring Them Home?</h3>
+          <ul class="space-y-3 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Gravity Wells &amp; Rocket Mass:</strong> Escaping Martian or Lunar gravity requires massive return rocket stages and cryogenic propellant probes cannot carry.</li>
+            <li>• <strong class="text-white">Hyperbolic Trajectories:</strong> Voyager 1 and Pioneer 10 possess velocities exceeding solar system escape velocity. They are in interstellar space forever.</li>
+            <li>• <strong class="text-white">Pristine Lunar Vacuum:</strong> No atmosphere, humidity, or wind means Surveyor 3 and Apollo gear are preserved like cosmic fossils.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-cyan)] font-bold">COMPONENT: WhatHappensNext.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">The Future: Archaeology, Recycling &amp; ISRU</h3>
+          <ul class="space-y-3 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Space Archaeology:</strong> International campaigns to declare Tranquility Base and Opportunity landing sites as protected historical parks.</li>
+            <li>• <strong class="text-white">In-Situ Resource Utilization (ISRU):</strong> Future lunar colonists recycling structural aluminum frames and electronics for base construction.</li>
+            <li>• <strong class="text-white">Biological Preservation:</strong> Microbes recovered from Surveyor 3 proved life could survive dormant for 2.5 years on the Moon.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: Mission Detail Route -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-cyan)] uppercase tracking-wider">10 // PAGE 2: /machines/[slug]</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Mission Detail Page: Static Routing &amp; SEO</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <h3 class="font-display font-bold text-xl text-[var(--color-cyan)]">Static Pipeline (page.tsx)</h3>
+          <ul class="space-y-3 text-xs md:text-sm text-gray-300 font-mono">
+            <li><span class="text-white">generateStaticParams():</span> Pre-compiles all 8 spacecraft pages at build time. 0ms server execution on request.</li>
+            <li><span class="text-white">generateMetadata():</span> Dynamically generates spacecraft-specific SEO titles, descriptions, and OpenGraph image payloads.</li>
+            <li><span class="text-white">Circular Pager Engine:</span> Computes prevMachine and nextMachine to allow seamless cyclical browsing across missions.</li>
+            <li><span class="text-white">notFound() Handler:</span> Validates slug parameters against MACHINES array and triggers Next.js 404 page if invalid.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <h3 class="font-display font-bold text-xl text-[var(--color-amber)]">MachineClientView.tsx Architecture</h3>
+          <ul class="space-y-3 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Native Web Share API:</strong> Integrates navigator.share() with graceful automatic fallback to clipboard copy.</li>
+            <li>• <strong class="text-white">Scroll Progress Tracking:</strong> Monitors scroll depth through the final log to decay the carrier wave visualizer in real time.</li>
+            <li>• <strong class="text-white">Modular Subcomponents:</strong>
+              <div class="text-xs text-gray-400 mt-1 font-mono">
+                SilenceClock &rarr; SignalVisualizer &rarr; FinalLog &rarr; WhatReallyHappened &rarr; ThenNowSlider &rarr; ScienceCards &rarr; Quiz
+              </div>
+            </li>
+            <li>• <strong class="text-white">Full Citation Registry:</strong> Direct links to NASA NTRS and JPL mission logs at the base of every page.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12: Terminal Final Logs -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-amber)] uppercase tracking-wider">11 // FEATURE DEEP-DIVE</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Terminal Final Logs: Accessible Typewriter Telemetry</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">COMPONENT: FinalLog.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">Visual &amp; Emotional Experience</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Obsidian Terminal Aesthetic:</strong> JetBrains Mono font styled to replicate Deep Space Network telemetry consoles.</li>
+            <li>• <strong class="text-white">Streaming Typewriter:</strong> Words and telemetry frames stream into view simulating incoming packets across planetary distances.</li>
+            <li>• <strong class="text-white">Real Telemetry Values:</strong> Surfacing Sol count, Earth date, voltage drops, and sensor readings.</li>
+            <li>• <strong class="text-white">Skip Animation Control:</strong> Instant button allowing fast readers and educators to immediately display the full log.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-cyan)] font-bold">ACCESSIBILITY INNOVATION</div>
+          <h3 class="font-display font-bold text-xl text-white">Solving the Screen Reader Typewriter Trap</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">The Common Trap:</strong> Standard typewriter animations bombard screen readers with live-region mutations every 50ms, making speech synthesizers stutter unreadably.</li>
+            <li>• <strong class="text-white">Our Engineering Solution:</strong> We explicitly set <code class="text-[var(--color-amber)]">aria-live="off"</code> on the animated element and inject the full, static log into a visually hidden container (<code class="text-[var(--color-cyan)]">.sr-only</code>).</li>
+            <li>• <strong class="text-white">Result:</strong> Visually impaired users hear the entire log read cleanly and coherently with zero delay.</li>
+            <li>• <strong class="text-white">Pedagogical Disclosure:</strong> Discloses that the dramatization maps 1:1 to real telemetry records.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 13: Silence Clock -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-cyan)] uppercase tracking-wider">12 // FEATURE DEEP-DIVE</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Hydration-Safe Silence Clock</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <h3 class="font-display font-bold text-xl text-[var(--color-cyan)]">Solving Next.js Hydration Mismatch</h3>
+          <p class="text-xs md:text-sm text-gray-300 leading-relaxed">
+            In server-rendered React applications, calculating a live clock during SSR creates a fatal mismatch between the server timestamp (T1) and the client hydration timestamp (T2).
+          </p>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-400">
+            <li>• <strong class="text-white">useMounted Hook (src/lib/useMounted.ts):</strong> Defers live clock calculations until after the initial DOM mount has completed.</li>
+            <li>• <strong class="text-white">Zero SSR Flashing:</strong> Renders a clean static baseline during server rendering, then smoothly initiates the live tick.</li>
+            <li>• <strong class="text-white">Zero Console Errors:</strong> Completely eliminates React Hydration Error 418/423 in production builds.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">COMPONENT: SilenceClock.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">Dual-Mode Telemetry Ticker</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Silent Craft:</strong> Ticks exact elapsed duration since final signal: Years, Days, Hours, Minutes, and Seconds.</li>
+            <li>• <strong class="text-white">Active Craft:</strong> Automatically toggles to 'Operational Duration' and computes real-time one-way light delay for Voyager 1 and Apollo 11.</li>
+            <li>• <strong class="text-white">Martian Sols Conversion:</strong> Automatically computes Martian sols (24h 39m 35s per sol) for Mars surface craft.</li>
+            <li>• <strong class="text-white">Terminal Cause Banner:</strong> Displays the final engineering cause (e.g. 'Martian dust storm', 'Rotor blade tip strike', 'Command loss').</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 14: Signal Visualizer -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-cyan)] uppercase tracking-wider">13 // FEATURE DEEP-DIVE</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">SignalVisualizer: Scroll-Decaying Carrier Waveform</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-cyan)] font-bold">COMPONENT: SignalVisualizer.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">Mathematical Waveform Synthesis</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Dynamic SVG Sine Paths:</strong> Generates multi-harmonic SVG path data dynamically: <code class="text-[var(--color-cyan)]">y = A &bull; sin(kx - &omega;t)</code>.</li>
+            <li>• <strong class="text-white">Scroll-Linked Amplitude Decay:</strong> As the student reads deeper into the final log, wave amplitude smoothly collapses towards 0.</li>
+            <li>• <strong class="text-white">The Flatline Moment:</strong> The visual flatline corresponds to the exact moment NASA DSN telemetry lock was lost forever.</li>
+            <li>• <strong class="text-white">60fps Animation:</strong> Animated via requestAnimationFrame without triggering heavy CSS repaints.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-green)] font-bold">MULTI-MODAL OPERATION</div>
+          <h3 class="font-display font-bold text-xl text-white">Active Craft &amp; Reduced-Motion</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Voyager 1 Mode:</strong> Waveform never decays; pulses with continuous high-frequency oscillations representing interstellar transmission.</li>
+            <li>• <strong class="text-white">Apollo 11 Retroreflector Mode:</strong> Generates periodic sharp spikes modeling Earth observatory laser firings bouncing off the Moon.</li>
+            <li>• <strong class="text-white">Color Tokens:</strong> Silver for lunar craft, rust red for Mars explorers, cyan for deep space probes.</li>
+            <li>• <strong class="text-white">prefers-reduced-motion:</strong> Converts animated waves to a stationary technical carrier line for sensitive users.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 15: Then & Now Sliders -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-amber)] uppercase tracking-wider">14 // FEATURE DEEP-DIVE</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Then &amp; Now Sliders: Accessible Range Inputs</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">COMPONENT: ThenNowSlider.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">Engineering Accessible Sliders</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Native &lt;input type="range"&gt;:</strong> Eliminates 100+ lines of fragile drag-and-drop JavaScript by leveraging the browser's native semantic range input.</li>
+            <li>• <strong class="text-white">Pure CSS clip-path:</strong> Uses <code class="text-[var(--color-amber)]">clip-path: inset(0 0 0 X%)</code> to reveal the 'Now' image smoothly under the 'Then' image.</li>
+            <li>• <strong class="text-white">Keyboard Navigation:</strong> Fully operable with Left and Right arrow keys with fine and coarse step adjustments.</li>
+            <li>• <strong class="text-white">Mobile Touch Support:</strong> Flawless touch-dragging across Android and iOS touchscreens.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-cyan)] font-bold">NASA ARCHIVAL IMAGERY</div>
+          <h3 class="font-display font-bold text-xl text-white">Curated Historical Comparisons</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Surveyor 3:</strong> Fresh lander on lunar surface (1967) vs. Apollo 12 astronaut Pete Conrad examining the lander in 1969.</li>
+            <li>• <strong class="text-white">Opportunity:</strong> Golden solar panels at landing (2004) vs. HiRISE orbital spy shot resting in Perseverance Valley.</li>
+            <li>• <strong class="text-white">InSight:</strong> Clean solar arrays on Sol 10 vs. thick orange Martian dust coating its cells on Sol 1,211.</li>
+            <li>• <strong class="text-white">Official Credits:</strong> Every image pair includes official NASA Image IDs and archive links.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 16: Science Cards & Try It -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-green)] uppercase tracking-wider">15 // PEDAGOGICAL FEATURES</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Science Cards &amp; "Try It" Classroom Experiments</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-green)] font-bold">COMPONENT: ScienceCards.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">3-Tier Scientific Impact Framework</h3>
+          <ul class="space-y-3 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">1. The Core Scientific Discovery:</strong> Explains the breakthrough in clear student-friendly language (e.g. Opportunity discovering hematite 'blueberries' proving liquid water existed).</li>
+            <li>• <strong class="text-white">2. Instruments &amp; Telemetry Data:</strong> Highlights the hardware responsible (e.g. Alpha Particle X-Ray Spectrometers, Mössbauer spectrometers, seismometers).</li>
+            <li>• <strong class="text-white">3. Modern Significance:</strong> Directly links past missions to current programs like Artemis, Perseverance, and Mars Sample Return.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">HANDS-ON STEM MODULES</div>
+          <h3 class="font-display font-bold text-xl text-white">"Try It At Home" Mini-Experiments</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Surveyor 3 Soil Test:</strong> Dropping marbles into flour and cocoa powder to test lunar regolith bearing strength.</li>
+            <li>• <strong class="text-white">Apollo 11 Retroreflector:</strong> Taping two household mirrors at 90 degrees to demonstrate corner-cube laser reflection.</li>
+            <li>• <strong class="text-white">Opportunity Magnetism:</strong> Dragging a neodymium magnet through yard dirt to discover natural magnetic iron minerals.</li>
+            <li>• <strong class="text-white">InSight Desk Seismology:</strong> Tapping desks with varying rhythms to observe mechanical wave propagation through solids.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 17: Mission Debrief Quiz -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-cyan)] uppercase tracking-wider">16 // GAMIFICATION &amp; ASSESSMENT</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Mission Debrief Quiz &amp; LocalStorage Sync</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-cyan)] font-bold">COMPONENT: Quiz.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">Formative Assessment Engine</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">3 Curated Questions Per Craft:</strong> Covers engineering limits, scientific payloads, and historical mission milestones.</li>
+            <li>• <strong class="text-white">Instant Explanatory Feedback:</strong> Selecting an answer immediately reveals scientific reasoning for why an option is right or wrong.</li>
+            <li>• <strong class="text-white">Mastery-Based Retry:</strong> Students can review mistakes and re-attempt without punitive grading, reinforcing STEM learning.</li>
+            <li>• <strong class="text-white">Celebratory Confetti:</strong> Passing all 3 questions launches an explosion of canvas-confetti and awards mission clearance.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-green)] font-bold">GLOBAL STATE SYNCHRONIZATION</div>
+          <h3 class="font-display font-bold text-xl text-white">Client-Side Persistence &amp; Privacy</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Zero-Login Architecture:</strong> Progress stores directly in the browser's localStorage under 'last-words-quiz-progress'.</li>
+            <li>• <strong class="text-white">COPPA &amp; GDPR Compliant:</strong> Perfect for school devices; collects zero personal identifying information or telemetry tracking cookies.</li>
+            <li>• <strong class="text-white">Cross-Component Sync:</strong> Completing a quiz immediately updates the global badge counter in the Navbar and Homepage.</li>
+            <li>• <strong class="text-white">CI Test Guard:</strong> scripts/validate-data.mjs asserts that every question's correct answer index is within range.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 18: Procedural Web Audio API -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-amber)] uppercase tracking-wider">17 // TECHNICAL INNOVATION</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Procedural Web Audio API Synthesizer</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">ENGINE: src/lib/audio.ts</div>
+          <h3 class="font-display font-bold text-xl text-white">0 KB Asset Footprint Audio</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Zero External MP3/WAV Files:</strong> Most web audio bundles add 5–20 MB of heavy audio assets. Our engine is pure TypeScript code (< 140 lines).</li>
+            <li>• <strong class="text-white">Browser AudioContext:</strong> Synthesizes real-time sound using OscillatorNode and GainNode primitives directly in browser memory.</li>
+            <li>• <strong class="text-white">Telemetry Blip Tones:</strong> Generates gentle 880 Hz carrier blips, soft telemetry typewriter clicks, and quiz completion chimes.</li>
+            <li>• <strong class="text-white">Dynamic Frequency Shaping:</strong> Smooth exponential gain ramps prevent harsh popping or acoustic distortion.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-cyan)] font-bold">ETHICAL AUDIO DESIGN</div>
+          <h3 class="font-display font-bold text-xl text-white">Off-by-Default &amp; User Consent</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Strictly Silent by Default:</strong> Never autoplays sound. Conforms strictly to modern web accessibility best practices.</li>
+            <li>• <strong class="text-white">Prominent Global Toggle:</strong> A clear speaker button in the Navbar allows users to opt-in at any time.</li>
+            <li>• <strong class="text-white">Persistent Preference:</strong> User choice is saved in localStorage ('last-words-audio-enabled').</li>
+            <li>• <strong class="text-white">Safe Autoplay Policy Handling:</strong> Automatically calls ctx.resume() on the first user interaction to satisfy browser autoplay security policies.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 19: Educator Hub (/teachers) -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-amber)] uppercase tracking-wider">18 // PAGE 3: /teachers</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Educator Hub &amp; Print-Optimized Curriculum</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">COMPONENT: TeacherView.tsx</div>
+          <h3 class="font-display font-bold text-xl text-white">The 20-Minute Turnkey Lesson Plan</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Step 1: The Dramatic Hook (0-3 Min):</strong> Dim classroom lights; read Opportunity's or InSight's final log aloud without naming the craft.</li>
+            <li>• <strong class="text-white">Step 2: Student Exploration (3-13 Min):</strong> Students explore the Silence Timeline, inspect telemetry logs, and solve quizzes.</li>
+            <li>• <strong class="text-white">Step 3: Guided Class Debate (13-18 Min):</strong> Facilitate discussion on planetary ethics and space archaeology.</li>
+            <li>• <strong class="text-white">Step 4: Exit Ticket (18-20 Min):</strong> Students submit their findings on the printed worksheet.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-green)] font-bold">CSS @media print OPTIMIZATION</div>
+          <h3 class="font-display font-bold text-xl text-white">1-Click Printable Student Worksheet</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Paper-Friendly Formatting:</strong> Clicking 'Print Student Worksheet' invokes window.print() with tailored @media print rules.</li>
+            <li>• <strong class="text-white">Ink-Saving Inversion:</strong> Automatically removes dark backgrounds and screen navbars (.no-print) to output clean black text on white paper.</li>
+            <li>• <strong class="text-white">Structured Worksheet Fields:</strong> Spaces for Mission Name, Destination, Final Signal Date, Telemetry Analysis, and Discovery Summary.</li>
+            <li>• <strong class="text-white">6 Guided Discussion Prompts:</strong> Includes prompts on space archaeology vs. metal recycling and rover emotional attachment.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 20: About, Methodology & Sources -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-cyan)] uppercase tracking-wider">19 // PAGE 4: /about</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Methodology, Fact-Checking &amp; Primary Sources</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <h3 class="font-display font-bold text-xl text-[var(--color-cyan)]">Our Fact-Checking Protocol</h3>
+          <p class="text-xs md:text-sm text-gray-300 leading-relaxed">
+            In an era of generative AI misinformation, LAST WORDS enforces strict scientific authenticity:
+          </p>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300 font-mono">
+            <li><span class="text-[var(--color-cyan)]">Tier 1:</span> NASA Science Directorates (science.nasa.gov, jpl.nasa.gov)</li>
+            <li><span class="text-[var(--color-cyan)]">Tier 2:</span> NASA Technical Reports Server (NTRS declassified documents)</li>
+            <li><span class="text-[var(--color-cyan)]">Tier 3:</span> Planetary Science Institute &amp; University Observatories</li>
+          </ul>
+          <p class="text-xs text-gray-400 border-t border-[var(--color-border)] pt-2">
+            Pedagogical note: Explains that anthropomorphizing probes is an intentional educational hook, backed 1:1 by real telemetry.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <h3 class="font-display font-bold text-xl text-[var(--color-amber)]">Image Rights &amp; Attribution Table</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Comprehensive Registry:</strong> Every photo on the site is itemized with its official NASA Image ID, credit, and license.</li>
+            <li>• <strong class="text-white">Archival Repositories:</strong> Imagery sourced from NASA Image and Video Library, JPL Photojournal, and HiRISE/LRO archives.</li>
+            <li>• <strong class="text-white">Descriptive Alt Text:</strong> Every image includes rich descriptive alt text for visually impaired screen-reader users.</li>
+            <li>• <strong class="text-white">Public Domain Compliance:</strong> Complies strictly with NASA image guidelines for educational fair-use.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 21: QA & Pre-Build Data Validator -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-green)] uppercase tracking-wider">20 // DEVOPS &amp; QUALITY ASSURANCE</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Pre-Build Data Validator: scripts/validate-data.mjs</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-green)] font-bold">AUTOMATED CI DATA GUARANTEE</div>
+          <h3 class="font-display font-bold text-xl text-white">Zero Malformed Data in Production</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">npm prebuild Hook:</strong> Runs automatically before every <code class="text-[var(--color-green)]">next build</code>; build terminates if validation fails.</li>
+            <li>• <strong class="text-white">1. Primary Sources Check:</strong> Enforces that every single mission contains &ge; 2 verified NASA source URLs.</li>
+            <li>• <strong class="text-white">2. ISO Date Validation:</strong> Asserts that all launchISO and lastSignalISO parse as valid ISO date strings.</li>
+            <li>• <strong class="text-white">3. Image &amp; Alt Text Check:</strong> Verifies alt text, visible credits, and source URLs for all images.</li>
+            <li>• <strong class="text-white">4. Quiz Bounds Integrity:</strong> Asserts that every quiz correct index is within its options array bounds.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-cyan)] font-bold">SEO &amp; METADATA INFRASTRUCTURE</div>
+          <h3 class="font-display font-bold text-xl text-white">Edge Dynamic OpenGraph &amp; Sitemaps</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Dynamic OpenGraph (opengraph-image.tsx):</strong> Next.js ImageResponse (@vercel/og) generates 1200x630 social share cards at edge runtime.</li>
+            <li>• <strong class="text-white">Automated sitemap.ts:</strong> Dynamically compiles all mission routes, /teachers, /about, and root with lastModified headers.</li>
+            <li>• <strong class="text-white">Automated robots.ts:</strong> Configures crawler permissions and points search engines to sitemap.xml.</li>
+            <li>• <strong class="text-white">Strict TypeScript:</strong> tsconfig.json enforces noUncheckedIndexedAccess and strict null checks.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 22: Deployment & Containerization -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-amber)] uppercase tracking-wider">21 // INFRASTRUCTURE &amp; HOSTING</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Deployment: Vercel Edge &amp; Multi-Stage Docker</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">EDGE CLOUD DEPLOYMENT</div>
+          <h3 class="font-display font-bold text-xl text-white">Vercel Global Edge Network</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Production URL:</strong> <a href="https://last-words1.vercel.app/" target="_blank" class="text-[var(--color-cyan)] underline">https://last-words1.vercel.app/</a></li>
+            <li>• <strong class="text-white">Zero Configuration:</strong> Automatically triggers prebuild data validation and Turbopack static compilation on every git push.</li>
+            <li>• <strong class="text-white">Global Edge Caching:</strong> Pre-rendered HTML bundles are replicated globally for sub-50ms Time-to-First-Byte (TTFB).</li>
+            <li>• <strong class="text-white">Compression &amp; Protocols:</strong> Modern Brotli compression and HTTP/3 support for rapid asset streaming.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-cyan)] font-bold">SELF-HOSTED / AIR-GAPPED</div>
+          <h3 class="font-display font-bold text-xl text-white">Multi-Stage Dockerfile &amp; Compose</h3>
+          <ul class="space-y-2 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">Stage 1 (Deps):</strong> Installs dependencies cleanly using npm ci.</li>
+            <li>• <strong class="text-white">Stage 2 (Builder):</strong> Runs data validation and compiles Next.js standalone output.</li>
+            <li>• <strong class="text-white">Stage 3 (Runner):</strong> Minimal Alpine Linux runner copying only .next/standalone.</li>
+            <li>• <strong class="text-white">1-Command Run:</strong> <code class="text-white bg-black/40 px-1 py-0.5 rounded">docker compose up -d --build</code></li>
+            <li>• <strong class="text-white">Air-Gapped Ready:</strong> Operates entirely offline inside school intranets or museum touchscreens.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 23: Q&A Ready Reference -->
+    <section class="slide w-full max-w-6xl flex flex-col justify-center space-y-6">
+      <div class="text-xs font-mono text-[var(--color-green)] uppercase tracking-wider">22 // SUMMARY &amp; Q&amp;A</div>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Key Takeaways &amp; Rapid Defense Cheat Sheet</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-green)] font-bold">4 CORE ARCHITECTURAL PILLARS</div>
+          <ul class="space-y-2.5 text-xs md:text-sm text-gray-300">
+            <li>• <strong class="text-white">1. Zero-Database SSG:</strong> 0ms database latency, 100% uptime, zero hosting costs, and offline resilience.</li>
+            <li>• <strong class="text-white">2. Synthetic Web Audio:</strong> Procedural oscillators create authentic telemetry audio with 0 KB audio files.</li>
+            <li>• <strong class="text-white">3. Inclusive Design:</strong> Atkinson Hyperlegible typography, screen-reader safe typewriter ARIA, and keyboard sliders.</li>
+            <li>• <strong class="text-white">4. Strict Scientific Rigor:</strong> Pre-build validation enforcing primary NASA NTRS citations and real flight director logs.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+          <div class="text-xs font-mono text-[var(--color-amber)] font-bold">RAPID Q&amp;A DEFENSE FOR JUDGES</div>
+          <ul class="space-y-2.5 text-xs md:text-sm text-gray-300">
+            <li><strong class="text-white">Q: Why Next.js 16 over plain Vite/React?</strong><br>
+            <span class="text-gray-400">A: App Router static generation (SSG), automatic edge OpenGraph banner synthesis, and zero layout shift font optimization.</span></li>
+            <li><strong class="text-white">Q: How do you prevent audio annoyance?</strong><br>
+            <span class="text-gray-400">A: Audio is 100% off-by-default, gentle, procedural, and respects user consent stored in localStorage.</span></li>
+            <li><strong class="text-white">Q: Are the stories real or fictional?</strong><br>
+            <span class="text-gray-400">A: 100% real. Dramatized lines map 1:1 to declassified NASA telemetry explained in 'What Really Happened'.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="h-16 border-t border-[var(--color-border)] px-6 flex items-center justify-between bg-[var(--color-surface)]/90 backdrop-blur z-20">
+    <div class="flex items-center space-x-2">
+      <button onclick="prevSlide()" class="px-4 py-2 text-xs font-mono rounded-lg border border-[var(--color-border)] hover:border-[var(--color-amber)] hover:bg-white/5 text-gray-200 transition cursor-pointer flex items-center space-x-1.5">
+        <span>← Previous [Left]</span>
+      </button>
+      <button onclick="nextSlide()" class="px-5 py-2 text-xs font-mono rounded-lg bg-[var(--color-amber)] hover:opacity-90 text-black font-bold transition cursor-pointer flex items-center space-x-1.5">
+        <span>Next Slide [Right / Space] →</span>
+      </button>
+    </div>
+
+    <!-- Slide progress bar -->
+    <div class="hidden md:flex flex-1 max-w-md mx-6 items-center">
+      <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+        <div id="progress-bar" class="bg-[var(--color-amber)] h-full transition-all duration-300" style="width: 4.3%;"></div>
+      </div>
+    </div>
+
+    <div class="text-xs font-mono text-gray-500">
+      Use <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-gray-300">←</kbd> <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-gray-300">→</kbd> or <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-gray-300">Space</kbd> to navigate
+    </div>
+  </footer>
+
+  <!-- Slide Overview Drawer Modal -->
+  <div id="overview-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex-col p-8 overflow-y-auto">
+    <div class="flex items-center justify-between pb-6 border-b border-[var(--color-border)] mb-6">
+      <h3 class="font-display font-bold text-2xl text-white">Slide Deck Overview (23 Slides)</h3>
+      <button onclick="toggleOverview()" class="px-4 py-1.5 rounded-lg border border-white/20 text-xs font-mono text-gray-300 hover:text-white cursor-pointer">
+        Close [Esc]
+      </button>
+    </div>
+    <div id="overview-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+
+  <!-- Speaker Notes Drawer -->
+  <aside id="notes-drawer" class="fixed bottom-16 right-6 w-96 max-h-72 bg-[var(--color-surface-elevated)] border border-[var(--color-amber)]/40 rounded-xl p-4 shadow-2xl z-40 hidden flex-col">
+    <div class="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
+      <span class="text-xs font-mono text-[var(--color-amber)] font-bold">🎙️ SPEAKER NOTES // TALKING POINTS</span>
+      <button onclick="toggleNotes()" class="text-gray-400 hover:text-white text-xs cursor-pointer">✕</button>
+    </div>
+    <div id="notes-content" class="text-xs text-gray-300 font-body leading-relaxed overflow-y-auto flex-1">
+      <!-- Populated dynamically -->
+    </div>
+  </aside>
+
+  <!-- Interactive Presentation Script -->
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let currentSlide = 0;
+
+    const speakerNotes = [
+      "Welcome everyone. Today we are presenting the technical architecture, design philosophy, and page-by-page feature breakdown of LAST WORDS, our submission for the NASA Space Apps Challenge 2026. This project tells the stories of NASA's silent and enduring machines on the Moon, Mars, and deep space.",
+      "LAST WORDS answers NASA's challenge: 'Abandoned but not Forgotten'. We built an interactive platform specifically designed for students in grades 5 to 10, educators, and space enthusiasts. Our engineering goal was simple: combine emotional, humanized storytelling with unapologetic scientific accuracy, using real telemetry and zero fluff.",
+      "Here is our complete production stack. We intentionally picked modern, battle-tested tools: Next.js 16 with App Router, React 19, TypeScript 5, and the newly released Tailwind CSS v4. Notice that we didn't add bloated libraries; everything is lean and purpose-built.",
+      "Judges and senior engineers often ask: 'Where is your database?' Our architectural answer is deliberate: NASA mission telemetry is historical and immutable. Modeling this in a headless CMS or relational database would introduce network latency, database connection pooling issues, security surface area, and hosting costs. SSG gives us 0ms database query time and 100% offline reliability.",
+      "Design in LAST WORDS is not just aesthetic—it is functional and pedagogical. We established a strict 3-tier font system and engineered our UI to pass WCAG 2.2 AA standards. Notice our choice of Atkinson Hyperlegible: it was created by the Braille Institute specifically for people with low vision and dyslexia.",
+      "Now let's walk through the pages starting with the homepage. The homepage serves as mission control. It welcomes the user with an animated oscilloscope carrier pulse and displays their Deep Space Listener Badge progress.",
+      "The centerpiece of the homepage is the Silence Timeline. It organizes all 8 missions chronologically from Surveyor 3 in 1967 all the way to present day. It provides instant filtering by destination.",
+      "One of our most unique features is the Voyager 1 Light-Day countdown. On November 18, 2026, Voyager 1 will cross one light-day from Earth. This component explains light delay physics in real time.",
+      "This feature highlights the staggering engineering resilience of NASA hardware. Opportunity was designed for 90 days but survived 14 years. We created custom SVG comparison bars to showcase this visually.",
+      "To answer the fundamental questions students ask—'Why don't we bring them back?' and 'What will happen to them in the future?'—we engineered two dedicated analytical panels.",
+      "Now let's examine the heart of the application: the Mission Detail page at /machines/[slug]. Here we take full advantage of Next.js 16 App Router features.",
+      "The Terminal Final Log is the emotional core of each mission page. It animates each probe's final moments based on real telemetry. But we engineered it with extraordinary accessibility considerations.",
+      "Tracking time since a spacecraft went silent requires real-time precision. But in Next.js Server Components, rendering the current timestamp causes server-client hydration mismatches. Here is how we solved it with useMounted.",
+      "As students read through the final transmission of a dying probe, the carrier waveform visually flatlines in synchronization with their reading. It creates a stunning sensory connection to the data.",
+      "Space archaeology requires looking at machines when they were fresh on the launchpad vs. how they sit today. Many slider libraries are inaccessible; we engineered ours with native HTML range inputs.",
+      "LAST WORDS is not a graveyard—it is a celebration of breakthroughs. The ScienceCards component translates complex planetary findings into intuitive concepts and hands-on home experiments.",
+      "To ensure active learning, every mission concludes with a 3-question debrief quiz. We built immediate explanatory feedback into every answer choice.",
+      "One of our most elegant technical choices: we have sound on the site, but 0 audio files! We engineered a real-time procedural synthesizer with the native Web Audio API.",
+      "We built a dedicated Educator Hub at /teachers to give teachers ready-to-use curriculum. It includes a 20-minute lesson plan and a printable student worksheet.",
+      "In an era of generative AI hallucinations, LAST WORDS takes scientific integrity seriously. The /about page documents our strict primary source hierarchy and image attribution registry.",
+      "To ensure that corrupt data or missing citations never reach production, we built an automated validation suite that runs as an npm prebuild hook.",
+      "LAST WORDS can be deployed in seconds anywhere. We provide native Vercel Edge deployment as well as a production multi-stage Dockerfile for self-hosted VPS or school intranets.",
+      "To wrap up, here are the core technical achievements of LAST WORDS and ready-made answers to common judge questions. Thank you, and we look forward to your questions!"
+    ];
+
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx === currentSlide);
+      });
+      document.getElementById('slide-indicator').textContent = `Slide ${currentSlide + 1} / ${slides.length}`;
+      document.getElementById('progress-bar').style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
+      
+      const notesEl = document.getElementById('notes-content');
+      if (notesEl && speakerNotes[currentSlide]) {
+        notesEl.innerHTML = `<p>${speakerNotes[currentSlide]}</p>`;
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(idx) {
+      if (idx >= 0 && idx < slides.length) {
+        currentSlide = idx;
+        updateSlide();
+        document.getElementById('overview-modal').classList.add('hidden');
+        document.getElementById('overview-modal').classList.remove('flex');
+      }
+    }
+
+    function toggleNotes() {
+      const drawer = document.getElementById('notes-drawer');
+      drawer.classList.toggle('hidden');
+      drawer.classList.toggle('flex');
+    }
+
+    function toggleOverview() {
+      const modal = document.getElementById('overview-modal');
+      const isHidden = modal.classList.contains('hidden');
+      if (isHidden) {
+        buildOverviewGrid();
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function buildOverviewGrid() {
+      const grid = document.getElementById('overview-grid');
+      grid.innerHTML = '';
+      slides.forEach((s, idx) => {
+        const titleEl = s.querySelector('h1, h2');
+        const titleText = titleEl ? titleEl.innerText : `Slide ${idx + 1}`;
+        const card = document.createElement('div');
+        card.className = `p-3 rounded-xl border ${idx === currentSlide ? 'border-[var(--color-amber)] bg-[var(--color-amber)]/10' : 'border-white/10 bg-white/5'} hover:border-white transition cursor-pointer flex flex-col justify-between h-28`;
+        card.innerHTML = `
+          <div class="text-[10px] font-mono text-[var(--color-amber)]">SLIDE ${idx + 1}</div>
+          <div class="text-xs font-bold text-white line-clamp-2">${titleText}</div>
+          <div class="text-[9px] font-mono text-gray-400">Click to jump</div>
+        `;
+        card.onclick = () => goToSlide(idx);
+        grid.appendChild(card);
+      });
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 's') {
+        toggleNotes();
+      } else if (e.key.toLowerCase() === 'o') {
+        toggleOverview();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        document.getElementById('overview-modal').classList.add('hidden');
+        document.getElementById('overview-modal').classList.remove('flex');
+      }
+    });
+
+    // Initialize
+    updateSlide();
+  </script>
+</body>
+</html>
